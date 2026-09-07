@@ -69,18 +69,27 @@
 
   /* Fraunces has deep descenders and the italic reaches further still, so a
      display line-height tuned by eye leaves the tail of a "p" painting
-     outside its own box. Every heading here is set loose enough that the
-     glyphs fit inside the element, which is what stops them being clipped
-     the moment anything downstream sets overflow. */
+     outside its own box — visible as a chopped letter, and clipped outright
+     the moment anything downstream sets overflow.
+  
+     Rather than tune a line-height until it happens to fit, every serif
+     heading gets a little padding on the descender side. Line-height alone
+     is a guess about one font's metrics; padding survives a font swap, a
+     variable-weight change, and whatever a browser decides to do with
+     fallback fonts on a machine that never loads Fraunces at all. */
+  .serif-fit {
+    padding-bottom: 0.1em;
+    /* The italic also overhangs to the right of its advance width. */
+    padding-right: 0.06em;
+  }
+
   h1 {
     margin: 0 0 24px;
     font-family: var(--serif);
     font-weight: 600;
     font-size: clamp(42px, 6.6vw, 72px);
-    line-height: 1.16;
+    line-height: 1.2;
     letter-spacing: -0.02em;
-    /* The italic overhangs to the right of its advance width. */
-    padding-right: 0.06em;
   }
   h1 em { font-style: italic; color: var(--acid); }
 
@@ -131,9 +140,8 @@
   .band-head h2 {
     margin: 0; font-family: var(--serif);
     font-size: clamp(29px, 3.8vw, 40px);
-    font-weight: 600; letter-spacing: -0.02em; line-height: 1.22;
+    font-weight: 600; letter-spacing: -0.02em; line-height: 1.24;
     max-width: 20em;
-    padding-right: 0.06em;
   }
   .band-head h2 em { font-style: italic; color: var(--acid); }
 
@@ -196,7 +204,7 @@
       <span class="label">Download</span>
     </div>
 
-    <h1>Your books never leave <em>your computer.</em></h1>
+    <h1 class="serif-fit">Your books never leave <em>your computer.</em></h1>
 
     <p class="lede">
       Every other bookkeeping app keeps your accounts on somebody else's
@@ -208,7 +216,7 @@
     <div class="download">
       <div>
         <a id="primary" class="get" aria-disabled="true" href="#">
-          <span class="get-label" id="primary-label">Finding the latest build…</span>
+          <span class="get-label serif-fit" id="primary-label">Finding the latest build…</span>
           <span class="get-meta" id="primary-meta">One moment.</span>
         </a>
 
@@ -219,7 +227,7 @@
       </div>
 
       <div class="aside">
-        <h3>Before you run it</h3>
+        <h3 class="serif-fit">Before you run it</h3>
         <p>
           These builds are <strong>not code signed yet</strong>. Windows will say
           the publisher is unrecognised — choose <strong>More info</strong>, then
@@ -242,12 +250,12 @@
           <span class="num">02</span>
           <span class="label">Why that is safer</span>
         </div>
-        <h2>The safest place for your accounts is <em>the one nobody else can reach.</em></h2>
+        <h2 class="serif-fit">The safest place for your accounts is <em>the one nobody else can reach.</em></h2>
       </div>
 
       <div class="grid">
         <div class="cell">
-          <h3>There is no account to breach</h3>
+          <h3 class="serif-fit">There is no account to breach</h3>
           <p>
             You do not sign up to anything. Your books are a file on your disk,
             protected by your computer's own account, and no server anywhere holds
@@ -256,7 +264,7 @@
           </p>
         </div>
         <div class="cell">
-          <h3>Backups that actually come back</h3>
+          <h3 class="serif-fit">Backups that actually come back</h3>
           <p>
             One file holds your ledger and every receipt, each with a checksum. A
             damaged backup is refused rather than half-restored, and restoring one
@@ -265,7 +273,7 @@
           </p>
         </div>
         <div class="cell">
-          <h3>Numbers that cannot change quietly</h3>
+          <h3 class="serif-fit">Numbers that cannot change quietly</h3>
           <p>
             Once a line is reconciled against a bank statement it is locked, and
             editing it means undoing that statement first. Imported statements are
@@ -284,7 +292,7 @@
           <span class="num">03</span>
           <span class="label">What leaves the machine</span>
         </div>
-        <h2>The whole list, so you can <em>check it yourself.</em></h2>
+        <h2 class="serif-fit">The whole list, so you can <em>check it yourself.</em></h2>
       </div>
 
       <dl class="traffic">
