@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eclipse Finance — Download</title>
-<meta name="description" content="Bookkeeping that runs on your computer. Your books stay on your disk. Free download for Windows, macOS and Linux.">
+<meta name="description" content="Bookkeeping that runs on your own computer. No account, no server, nothing to breach. Free for Windows, macOS and Linux.">
 <meta property="og:title" content="Eclipse Finance">
-<meta property="og:description" content="Bookkeeping that runs on your computer. Your books stay on your disk.">
+<meta property="og:description" content="Bookkeeping that runs on your own computer. No account, no server, nothing to breach.">
 <meta property="og:type" content="website">
 <link rel="icon" href="eclipse-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,6 @@
 <style>
   :root {
     --bg: #0a0a0a;
-    --panel: #101010;
     --rule: #232323;
     --ink: #ffffff;
     --soft: #a8a8a8;
@@ -26,7 +25,6 @@
   }
 
   * { box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -41,41 +39,15 @@
 
   .shell { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
 
-  /* ---- header ---- */
+  header { border-bottom: 1px solid var(--rule); }
+  .bar { display: flex; align-items: center; gap: 20px; height: 92px; }
 
-  header {
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .bar {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    height: 92px;
-  }
-
-  .lockup {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    text-decoration: none;
-    color: var(--ink);
-  }
-
+  .lockup { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--ink); }
   .lockup img { width: 30px; height: 30px; display: block; }
-
-  .lockup span {
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
+  .lockup span { font-size: 15px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
   .lockup .thin { font-weight: 400; color: var(--soft); }
-
   .bar .spacer { flex: 1; }
 
-  /* The site's own link treatment: small, heavy, tracked, acid. */
   .up {
     font-size: 12px;
     font-weight: 800;
@@ -84,170 +56,98 @@
     color: var(--acid);
     text-decoration: none;
   }
-
   .up:hover { color: #b9ef5e; }
-
-  /* ---- hero ---- */
 
   .hero { padding: 96px 0 72px; }
 
-  .eyebrow {
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-    margin-bottom: 26px;
-  }
-
+  .eyebrow { display: flex; align-items: baseline; gap: 18px; margin-bottom: 26px; }
   .eyebrow .num { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
-
   .eyebrow .label {
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--acid);
+    font-size: 12px; font-weight: 800; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--acid);
   }
 
   h1 {
     margin: 0 0 24px;
     font-family: var(--serif);
     font-weight: 600;
-    font-size: clamp(44px, 7vw, 76px);
-    line-height: 1.04;
+    font-size: clamp(42px, 6.6vw, 72px);
+    line-height: 1.05;
     letter-spacing: -0.02em;
   }
-
   h1 em { font-style: italic; color: var(--acid); }
 
-  .lede {
-    max-width: 34em;
-    margin: 0;
-    color: var(--soft);
-    font-size: 17px;
-    line-height: 1.65;
-  }
-
-  /* ---- download ---- */
+  .lede { max-width: 34em; margin: 0; color: var(--soft); font-size: 17px; line-height: 1.65; }
 
   .download { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; margin-top: 56px; align-items: start; }
 
   .get {
-    display: block;
-    padding: 26px 30px;
+    display: block; padding: 26px 30px;
     border: 1px solid rgba(163, 230, 53, 0.34);
     background: rgba(163, 230, 53, 0.05);
-    text-decoration: none;
-    color: var(--ink);
+    text-decoration: none; color: var(--ink);
     transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
   }
-
-  .get:hover {
-    background: rgba(163, 230, 53, 0.1);
-    border-color: rgba(163, 230, 53, 0.6);
-    transform: translateY(-1px);
-  }
-
+  .get:hover { background: rgba(163, 230, 53, 0.1); border-color: rgba(163, 230, 53, 0.6); transform: translateY(-1px); }
   .get[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
 
   .get-label {
-    display: block;
-    font-family: var(--serif);
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    color: var(--acid);
+    display: block; font-family: var(--serif); font-size: 26px;
+    font-weight: 600; letter-spacing: -0.015em; color: var(--acid);
   }
-
-  .get-meta {
-    display: block;
-    margin-top: 6px;
-    font-size: 13px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
+  .get-meta { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
   .others { margin-top: 26px; }
-
   .others h2 {
-    margin: 0 0 4px;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--muted);
+    margin: 0 0 4px; font-size: 12px; font-weight: 800;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
   }
 
-  .row {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    padding: 11px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
+  .row { display: flex; align-items: baseline; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--rule); }
   .row a { color: var(--soft); text-decoration: none; font-size: 14.5px; }
   .row a:hover { color: var(--acid); }
   .row .size { margin-left: auto; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
 
   .aside { border-left: 1px solid var(--rule); padding-left: 40px; }
-
-  .aside h3 {
-    margin: 0 0 10px;
-    font-family: var(--serif);
-    font-size: 21px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
+  .aside h3 { margin: 0 0 10px; font-family: var(--serif); font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
   .aside p { margin: 0 0 22px; color: var(--soft); font-size: 14.5px; line-height: 1.65; }
   .aside p:last-child { margin-bottom: 0; }
   .aside strong { color: var(--ink); font-weight: 600; }
 
-  /* ---- what it does ---- */
-
-  .feature-band { border-top: 1px solid var(--rule); margin-top: 84px; padding: 72px 0 96px; }
-
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-
-  .cell { padding-right: 56px; }
-  .cell + .cell { padding-right: 0; padding-left: 56px; border-left: 1px solid var(--rule); }
-
-  .cell h3 {
-    margin: 0 0 12px;
-    font-family: var(--serif);
-    font-size: 27px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-  }
-
-  .cell p { margin: 0; color: var(--soft); font-size: 15px; line-height: 1.68; }
+  .band { border-top: 1px solid var(--rule); padding: 72px 0; }
+  .band:last-of-type { padding-bottom: 96px; }
 
   .band-head { margin-bottom: 44px; }
-
   .band-head h2 {
-    margin: 0;
-    font-family: var(--serif);
-    font-size: clamp(30px, 4vw, 42px);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.12;
+    margin: 0; font-family: var(--serif);
+    font-size: clamp(29px, 3.8vw, 40px);
+    font-weight: 600; letter-spacing: -0.02em; line-height: 1.14;
+    max-width: 20em;
   }
-
   .band-head h2 em { font-style: italic; color: var(--acid); }
 
-  /* ---- footer ---- */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .cell { padding-right: 40px; }
+  .cell + .cell { padding-left: 40px; padding-right: 40px; border-left: 1px solid var(--rule); }
+  .cell:last-child { padding-right: 0; }
+
+  .cell h3 {
+    margin: 0 0 12px; font-family: var(--serif);
+    font-size: 23px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.2;
+  }
+  .cell p { margin: 0; color: var(--soft); font-size: 14.5px; line-height: 1.68; }
+
+  /* The plain-spoken list of what actually leaves the machine. Specific
+     enough to be checkable, because a security claim nobody can verify is
+     just a slogan. */
+  .traffic { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: 8px; }
+  .traffic > div { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .traffic dt { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+  .traffic dd { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .traffic .never dt { color: var(--acid); }
 
   footer { border-top: 1px solid var(--rule); padding: 40px 0 64px; }
-
-  .foot {
-    display: flex;
-    align-items: baseline;
-    gap: 28px;
-    flex-wrap: wrap;
-    font-size: 13.5px;
-    color: var(--muted);
-  }
-
+  .foot { display: flex; align-items: baseline; gap: 28px; flex-wrap: wrap; font-size: 13.5px; color: var(--muted); }
   .foot a { color: var(--soft); text-decoration: none; }
   .foot a:hover { color: var(--acid); }
   .foot .spacer { flex: 1; }
@@ -256,7 +156,7 @@
     .shell { padding: 0 24px; }
     .download { grid-template-columns: 1fr; gap: 40px; }
     .aside { border-left: 0; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 32px; }
-    .grid { grid-template-columns: 1fr; }
+    .grid, .traffic { grid-template-columns: 1fr; }
     .cell { padding-right: 0; }
     .cell + .cell { padding-left: 0; padding-top: 36px; margin-top: 36px; border-left: 0; border-top: 1px solid var(--rule); }
     .hero { padding: 64px 0 48px; }
@@ -285,13 +185,13 @@
       <span class="label">Download</span>
     </div>
 
-    <h1>Your books stay <em>yours.</em></h1>
+    <h1>Your books never leave <em>your computer.</em></h1>
 
     <p class="lede">
-      Bookkeeping that runs on your own computer. No subscription, no account on
-      somebody else's server, no invoice held hostage. Reads the statement files
-      your bank already gives you, reconciles against them, and tells you what
-      the balance looks like six weeks out.
+      Every other bookkeeping app keeps your accounts on somebody else's
+      server. Eclipse Finance keeps them in a file on your disk. There is no
+      login to a company database, no copy of your revenue sitting in a
+      warehouse waiting to be breached, and nothing to cancel.
     </p>
 
     <div class="download">
@@ -309,7 +209,7 @@
 
       <div class="aside">
         <h3>Before you run it</h3>
-        <p id="signing-note">
+        <p>
           These builds are <strong>not code signed yet</strong>. Windows will say
           the publisher is unrecognised — choose <strong>More info</strong>, then
           <strong>Run anyway</strong>. On a Mac, right-click the app and choose
@@ -317,48 +217,83 @@
         </p>
         <p>
           That warning means nobody has vouched for the publisher yet. It is not a
-          claim that anything is wrong with the app.
-        </p>
-        <p>
-          It updates itself from here once installed, so this is the only time you
-          need this page.
+          claim that anything is wrong with the app, and we would rather say so
+          here than have you find out from a red dialog.
         </p>
       </div>
     </div>
   </section>
 
-  <section class="feature-band">
+  <section class="band">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
           <span class="num">02</span>
-          <span class="label">What it does</span>
+          <span class="label">Why that is safer</span>
         </div>
-        <h2>Built for the small business that <em>does its own books.</em></h2>
+        <h2>The safest place for your accounts is <em>the one nobody else can reach.</em></h2>
       </div>
 
       <div class="grid">
         <div class="cell">
-          <h3>It reads your bank's own files</h3>
+          <h3>There is no account to breach</h3>
           <p>
-            Download the file your bank offers for Quicken — .ofx, .qfx or .qbo —
-            and it imports directly. Those carry the bank's own transaction ids, so
-            importing the same statement twice adds nothing the second time. It
-            learns how you categorise as you go, and flags anything that looks like
-            a duplicate instead of silently deciding for you.
+            You do not sign up to anything. Your books are a file on your disk,
+            protected by your computer's own account, and no server anywhere holds
+            a copy. A company that never had your numbers cannot lose them, be
+            subpoenaed for them, or sell them.
           </p>
         </div>
         <div class="cell">
-          <h3>It tells you what is coming</h3>
+          <h3>Backups that actually come back</h3>
           <p>
-            Scheduled bills, invoices that are not yet due, and how much you
-            ordinarily spend in a day, projected forward to the day your balance is
-            lowest. Invoices already overdue are deliberately left out — money
-            nobody has paid is not cash, and a forecast that counts it is
-            confidently wrong.
+            One file holds your ledger and every receipt, each with a checksum. A
+            damaged backup is refused rather than half-restored, and restoring one
+            sets your current books aside instead of overwriting them — so the
+            wrong backup is not the last mistake you get to make.
+          </p>
+        </div>
+        <div class="cell">
+          <h3>Numbers that cannot change quietly</h3>
+          <p>
+            Once a line is reconciled against a bank statement it is locked, and
+            editing it means undoing that statement first. Imported statements are
+            matched on the bank's own transaction ids, and anything that merely
+            looks like a duplicate is flagged for you rather than decided for you.
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">03</span>
+          <span class="label">What leaves the machine</span>
+        </div>
+        <h2>The whole list, so you can <em>check it yourself.</em></h2>
+      </div>
+
+      <dl class="traffic">
+        <div>
+          <dt>Checking for updates</dt>
+          <dd>Asks GitHub whether a newer version exists. Sends nothing about you.</dd>
+        </div>
+        <div>
+          <dt>Payment processors</dt>
+          <dd>Only if you connect Stripe, Square or PayPal yourself. Your keys are held in your operating system's keychain, never in the app's own files.</dd>
+        </div>
+        <div>
+          <dt>The invitation list</dt>
+          <dd>During the private alpha, your email address when you sign in, to check you were invited.</dd>
+        </div>
+        <div class="never">
+          <dt>Nothing else. Ever.</dt>
+          <dd>No analytics, no telemetry, no crash reporting, no "anonymous usage data". Your transactions, balances, customers and receipts are never transmitted anywhere.</dd>
+        </div>
+      </dl>
     </div>
   </section>
 </main>
@@ -401,11 +336,11 @@
   }
 
   const KINDS = [
-    { id: 'win',       match: (n) => n.endsWith('.exe'),                          title: 'Windows installer' },
-    { id: 'mac-arm64', match: (n) => n.endsWith('.dmg') && n.includes('arm64'),   title: 'macOS — Apple silicon' },
-    { id: 'mac-x64',   match: (n) => n.endsWith('.dmg') && n.includes('x64'),     title: 'macOS — Intel' },
-    { id: 'linux-app', match: (n) => n.endsWith('.AppImage'),                     title: 'Linux — AppImage' },
-    { id: 'linux-deb', match: (n) => n.endsWith('.deb'),                          title: 'Linux — Debian / Ubuntu' }
+    { id: 'win',       match: (n) => n.endsWith('.exe'),                        title: 'Windows installer' },
+    { id: 'mac-arm64', match: (n) => n.endsWith('.dmg') && n.includes('arm64'), title: 'macOS — Apple silicon' },
+    { id: 'mac-x64',   match: (n) => n.endsWith('.dmg') && n.includes('x64'),   title: 'macOS — Intel' },
+    { id: 'linux-app', match: (n) => n.endsWith('.AppImage'),                   title: 'Linux — AppImage' },
+    { id: 'linux-deb', match: (n) => n.endsWith('.deb'),                        title: 'Linux — Debian / Ubuntu' }
   ];
 
   const PREFERRED = { win: 'win', mac: 'mac-arm64', linux: 'linux-app' };
