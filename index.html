@@ -94,6 +94,22 @@
      which a tuned line-height does not. */
   .serif-fit { padding-bottom: 0.1em; padding-right: 0.12em; }
 
+  /* Headings break where the line lengths come out even, rather than filling
+     each line to the edge and dropping whatever is left onto its own row.
+     "Know what is coming before it / leaves" is what the greedy default
+     does; balance turns it into two sensible halves.
+  
+     Applied by the browser, not by hand-placed line breaks — those look
+     right at exactly one width and wrong at every other. */
+  h1, h2, h3, .get-label, .release-tag, .faq h3, .traffic dt {
+    text-wrap: balance;
+  }
+
+  /* And body copy avoids leaving a single word alone on the last line. */
+  p, dd, .lede, .caption {
+    text-wrap: pretty;
+  }
+
   h1 {
     margin: 0 0 24px; font-family: var(--serif); font-weight: 600;
     font-size: clamp(42px, 6.6vw, 72px); line-height: 1.2; letter-spacing: -0.02em;
@@ -206,6 +222,46 @@
   .traffic dd { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
   .traffic .never dt { color: var(--acid); }
 
+  /* ---- security detail ---- */
+
+  /* Specifics, in a table, because a security claim is only worth anything
+     if somebody can check it. Vague reassurance goes in the marketing copy
+     above; this is the part an actual engineer would read. */
+  .spec { margin-top: 8px; }
+  .spec > div {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .spec dt {
+    font-size: 14px; font-weight: 600; color: var(--ink);
+  }
+  .spec dd { margin: 0; font-size: 14px; color: var(--soft); line-height: 1.68; }
+  .spec code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; color: var(--acid);
+  }
+
+  /* The limits get the same weight as the strengths. A security page that
+     only lists wins is an advert. */
+  .limits {
+    margin-top: 44px;
+    border: 1px solid rgba(255, 196, 107, 0.26);
+    border-radius: 8px;
+    padding: 26px 30px;
+    background: rgba(255, 196, 107, 0.035);
+  }
+  .limits h3 {
+    margin: 0 0 6px; font-family: var(--serif); font-size: 22px;
+    font-weight: 600; letter-spacing: -0.015em;
+  }
+  .limits > p { margin: 0 0 18px; font-size: 14px; color: var(--soft); }
+  .limits dl { margin: 0; }
+  .limits dt { font-size: 14px; font-weight: 600; color: #ffc46b; margin-top: 16px; }
+  .limits dd { margin: 4px 0 0; font-size: 14px; color: var(--soft); line-height: 1.68; }
+
   /* ---- releases ---- */
 
   .release { padding: 20px 0; border-bottom: 1px solid var(--rule); }
@@ -245,6 +301,7 @@
     .shell { padding: 0 24px; }
     .bar nav { display: none; }
     .download, .feature, .grid, .traffic, .faq { grid-template-columns: 1fr; }
+    .spec > div { grid-template-columns: 1fr; gap: 6px; }
     .download { gap: 40px; }
     .feature { gap: 32px; }
     .feature.flip .feature-text { order: 0; }
@@ -269,6 +326,7 @@
       <nav>
         <a class="nav-link" href="#features">What it does</a>
         <a class="nav-link" href="#privacy">Privacy</a>
+        <a class="nav-link" href="#security">Security</a>
         <a class="nav-link" href="#releases">Releases</a>
         <a class="nav-link" href="#faq">FAQ</a>
       </nav>
@@ -498,11 +556,107 @@
     </div>
   </section>
 
-  <section class="band" id="releases">
+  <section class="band" id="security">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
           <span class="num">04</span>
+          <span class="label">Security, specifically</span>
+        </div>
+        <h2 class="serif-fit">The details, so you can <em>judge them yourself.</em></h2>
+      </div>
+
+      <dl class="spec">
+        <div>
+          <dt>Your password</dt>
+          <dd>
+            Hashed with <code>scrypt</code> at N=2<sup>15</sup>, r=8 — deliberately
+            slow and memory-hard, so guessing at it costs real hardware. Compared
+            in constant time, so how long a wrong answer takes reveals nothing
+            about how close it was.
+          </dd>
+        </div>
+        <div>
+          <dt>Payment processor keys</dt>
+          <dd>
+            Encrypted by your operating system's own keychain — DPAPI on Windows,
+            Keychain on macOS, libsecret on Linux — and tied to your OS user
+            account. Where no keychain exists, they fall back to
+            <code>AES-256-GCM</code> under your passphrase. Plaintext keys are
+            held only long enough to sign one request and never reach the part of
+            the app that draws the screen.
+          </dd>
+        </div>
+        <div>
+          <dt>Your recovery code</dt>
+          <dd>
+            160 bits from the system random source, shown once, and stored only as
+            a hash. It is single use: recovering with it clears it, because a
+            recovery code left live is a second permanent key to your books.
+          </dd>
+        </div>
+        <div>
+          <dt>Backups</dt>
+          <dd>
+            Every file inside a backup carries a <code>SHA-256</code> checksum. A
+            damaged or truncated archive is refused rather than half-restored, and
+            a restore stages everything and verifies it before touching what you
+            have — then sets the old copy aside rather than deleting it.
+          </dd>
+        </div>
+        <div>
+          <dt>Your books, at rest</dt>
+          <dd>
+            A database file in your user folder, protected by your operating
+            system account like every other file you own. Not encrypted — see
+            below.
+          </dd>
+        </div>
+        <div>
+          <dt>Telemetry</dt>
+          <dd>
+            None. No analytics, no crash reporting, no usage pings. The only
+            outbound requests are the three listed above, and you can verify that
+            with any network monitor.
+          </dd>
+        </div>
+      </dl>
+
+      <div class="limits">
+        <h3 class="serif-fit">What this does not do</h3>
+        <p>Stated here rather than left for you to discover.</p>
+        <dl>
+          <dt>The ledger file is not encrypted at rest</dt>
+          <dd>
+            Anyone who can reach your unlocked computer can read it, the same as
+            any document on your disk. Full-disk encryption — BitLocker or
+            FileVault — is the right answer today, and at-rest encryption is on
+            the list.
+          </dd>
+          <dt>The builds are not code signed yet</dt>
+          <dd>
+            Which is why Windows warns that the publisher is unrecognised and
+            macOS wants a right-click then Open. It also means you are trusting
+            the download itself; every build is published from a public,
+            reproducible CI run rather than from anybody's laptop.
+          </dd>
+          <dt>The invitation gate is a gate, not a lock</dt>
+          <dd>
+            It stops an installer being casually passed around during the alpha.
+            It runs on your computer, so somebody determined could remove it —
+            and gain nothing but the use of an app they were not invited to,
+            since no server holds anyone's books.
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="releases">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">05</span>
           <span class="label">Releases</span>
         </div>
         <h2 class="serif-fit">Built in the open, <em>shipped often.</em></h2>
@@ -517,7 +671,7 @@
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">05</span>
+          <span class="num">06</span>
           <span class="label">Questions</span>
         </div>
         <h2 class="serif-fit">The things worth <em>asking first.</em></h2>
