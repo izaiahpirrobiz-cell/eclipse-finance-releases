@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eclipse Finance — bookkeeping that stays on your computer</title>
-<meta name="description" content="Bookkeeping that runs on your own computer. Reads your bank's own statement files, reconciles against them, and shows what the balance looks like six weeks out. No account, no server, nothing to breach.">
+<meta name="description" content="Bookkeeping that runs on your own computer. Your books live in a file on your disk, it works offline, and it reads the statement files your bank already gives you.">
 <meta property="og:title" content="Eclipse Finance">
-<meta property="og:description" content="Bookkeeping that runs on your own computer. No account, no server, nothing to breach.">
+<meta property="og:description" content="Bookkeeping that runs on your own computer. Your books stay yours.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://finance.eclipsepublishingstudios.com/shots/cashflow.jpg">
 <!-- The page is a thin shell around a live API call, so a cached copy is
@@ -222,6 +222,25 @@
   .traffic dd { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
   .traffic .never dt { color: var(--acid); }
 
+  /* ---- how this differs ---- */
+
+  .versus { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 56px; }
+  .versus > div { padding-top: 4px; }
+  .versus h3 {
+    margin: 0 0 12px; font-family: var(--serif);
+    font-size: 23px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3;
+  }
+  .versus p { margin: 0 0 12px; font-size: 14.5px; line-height: 1.68; color: var(--soft); }
+  .versus p:last-child { margin-bottom: 0; }
+
+  /* The way everyone else does it, set back so the contrast is visible
+     without a table that would invite arguing over the cells. */
+  .versus-them {
+    color: var(--muted) !important;
+    border-left: 2px solid var(--rule);
+    padding-left: 16px;
+  }
+
   /* ---- security detail ---- */
 
   /* Specifics, in a table, because a security claim is only worth anything
@@ -300,7 +319,7 @@
   @media (max-width: 900px) {
     .shell { padding: 0 24px; }
     .bar nav { display: none; }
-    .download, .feature, .grid, .traffic, .faq { grid-template-columns: 1fr; }
+    .download, .feature, .grid, .traffic, .faq, .versus { grid-template-columns: 1fr; }
     .spec > div { grid-template-columns: 1fr; gap: 6px; }
     .download { gap: 40px; }
     .feature { gap: 32px; }
@@ -325,6 +344,7 @@
       <div class="spacer"></div>
       <nav>
         <a class="nav-link" href="#features">What it does</a>
+        <a class="nav-link" href="#different">Why this</a>
         <a class="nav-link" href="#privacy">Privacy</a>
         <a class="nav-link" href="#security">Security</a>
         <a class="nav-link" href="#releases">Releases</a>
@@ -342,13 +362,14 @@
       <span class="label">Download</span>
     </div>
 
-    <h1 class="serif-fit">Your books never leave <em>your computer.</em></h1>
+    <h1 class="serif-fit">Your books stay <em>yours.</em></h1>
 
     <p class="lede">
-      Every other bookkeeping app keeps your accounts on somebody else's
-      server. Eclipse Finance keeps them in a file on your disk. It reads the
-      statement files your bank already gives you, reconciles against them,
-      and tells you what the balance looks like six weeks out.
+      Your accounts live in a file on your own disk. The app works with the
+      network unplugged, exports everything on demand, and tells you exactly
+      what it sends and where. It reads the statement files your bank already
+      gives you, reconciles against them, and shows what the balance looks
+      like six weeks out.
     </p>
 
     <div class="download">
@@ -498,12 +519,13 @@
 
       <div class="grid">
         <div class="cell">
-          <h3 class="serif-fit">There is no account to breach</h3>
+          <h3 class="serif-fit">Your data has a home, and it is here</h3>
           <p>
-            You do not sign up to anything. Your books are a file on your disk,
-            protected by your computer's own account, and no server anywhere holds
-            a copy. A company that never had your numbers cannot lose them, be
-            subpoenaed for them, or sell them.
+            Your books are a file on your own disk that you can copy, back up or
+            take elsewhere whenever you like. Nothing about the app depends on a
+            connection: unplug the network and every screen still works. Anything
+            that ever syncs will be something you switch on, and this page will
+            say so.
           </p>
         </div>
         <div class="cell">
@@ -556,11 +578,83 @@
     </div>
   </section>
 
-  <section class="band" id="security">
+  <section class="band" id="different">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
           <span class="num">04</span>
+          <span class="label">How this differs</span>
+        </div>
+        <h2 class="serif-fit">Four decisions most accounting software <em>made the other way.</em></h2>
+      </div>
+
+      <div class="versus">
+        <div>
+          <h3 class="serif-fit">It reads your bank's files, not a feed</h3>
+          <p class="versus-them">
+            Most tools pull transactions through an aggregator holding your
+            banking login. Those connections break — a bank changes its site, the
+            link drops, and your ledger quietly stops updating until you notice.
+          </p>
+          <p>
+            Eclipse reads the statement file your bank already offers you. There is
+            no live connection to break and no third party holding a credential
+            that reaches your money. When your bank changes its website, nothing
+            happens to you.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="serif-fit">Duplicates are matched, not guessed</h3>
+          <p class="versus-them">
+            Import an overlapping statement into most software and it compares
+            dates and amounts, then either creates a second copy of everything or
+            silently swallows a real transaction that looked similar.
+          </p>
+          <p>
+            An OFX file carries the bank's own id for every line. Re-import the
+            same range and the second pass adds nothing — not "probably nothing".
+            Where no id exists, a likely duplicate is flagged for you rather than
+            decided for you.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="serif-fit">Reconciled means reconciled</h3>
+          <p class="versus-them">
+            In most ledgers a reconciled figure can still be edited afterwards, and
+            last quarter's numbers change under you with nothing to show why.
+          </p>
+          <p>
+            Once a line is checked against a statement it locks. Its category and
+            notes stay editable — the figures do not, until you undo that
+            statement deliberately. A balancing entry, if you need one, is a real
+            transaction anyone can see rather than a hidden adjustment.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="serif-fit">It tells you what is coming, not what happened</h3>
+          <p class="versus-them">
+            Reports describe the past. The question that actually keeps an owner
+            awake is whether payroll clears on the 30th.
+          </p>
+          <p>
+            Scheduled bills, unpaid invoices and your ordinary daily spend are
+            projected forward to the day your balance is lowest. Invoices already
+            overdue are deliberately left out — money nobody has paid is not cash,
+            and a forecast that counts it is confidently wrong.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="security">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">05</span>
           <span class="label">Security, specifically</span>
         </div>
         <h2 class="serif-fit">The details, so you can <em>judge them yourself.</em></h2>
@@ -656,7 +750,7 @@
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">05</span>
+          <span class="num">06</span>
           <span class="label">Releases</span>
         </div>
         <h2 class="serif-fit">Built in the open, <em>shipped often.</em></h2>
@@ -671,7 +765,7 @@
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">06</span>
+          <span class="num">07</span>
           <span class="label">Questions</span>
         </div>
         <h2 class="serif-fit">The things worth <em>asking first.</em></h2>
@@ -680,7 +774,7 @@
       <div class="faq">
         <div>
           <h3>What does it cost?</h3>
-          <p>Nothing, during the alpha. There is no subscription and no account, so there is nothing to cancel if you stop using it.</p>
+          <p>Nothing during the alpha. Whatever the pricing turns out to be, the file holding your books stays readable on your own machine — being a customer and having access to your own accounts are not the same thing here.</p>
         </div>
         <div>
           <h3>Can I try it right now?</h3>
@@ -696,7 +790,7 @@
         </div>
         <div>
           <h3>What if I stop using it?</h3>
-          <p>Export the register to CSV, or take a backup. Nothing is held hostage, because nothing of yours is anywhere we control.</p>
+          <p>Export the register to CSV, or take a backup — one file with your ledger and every receipt in it. The app keeps opening your books whether or not you are still a customer.</p>
         </div>
         <div>
           <h3>Does it work offline?</h3>
