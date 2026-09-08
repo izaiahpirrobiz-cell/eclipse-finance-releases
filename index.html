@@ -241,6 +241,44 @@
     padding-left: 16px;
   }
 
+  /* ---- coming next ---- */
+
+  /* Marked as unbuilt everywhere it appears. A roadmap that reads like a
+     feature list is how a page loses the trust the rest of it is arguing
+     for. */
+  .soon {
+    border: 1px solid rgba(163, 230, 53, 0.22);
+    border-radius: 10px;
+    padding: 34px 36px;
+    background: rgba(163, 230, 53, 0.03);
+  }
+
+  .soon-flag {
+    display: inline-block;
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--acid);
+    border: 1px solid rgba(163, 230, 53, 0.32);
+    padding: 3px 9px; border-radius: 3px; margin-bottom: 18px;
+  }
+
+  .soon h3 {
+    margin: 0 0 14px; font-family: var(--serif);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25;
+  }
+  .soon > p { margin: 0 0 16px; font-size: 15px; color: var(--soft); line-height: 1.68; }
+  .soon > p:last-child { margin-bottom: 0; }
+  .soon strong { color: var(--ink); font-weight: 600; }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 28px 0 8px; }
+  .steps > div { padding-right: 28px; }
+  .steps > div + div { padding-left: 28px; padding-right: 28px; border-left: 1px solid var(--rule); }
+  .steps > div:last-child { padding-right: 0; }
+  .steps .n {
+    display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.08em;
+    color: var(--acid); margin-bottom: 8px;
+  }
+  .steps p { margin: 0; font-size: 13.5px; color: var(--soft); line-height: 1.6; }
+
   /* ---- security detail ---- */
 
   /* Specifics, in a table, because a security claim is only worth anything
@@ -320,6 +358,9 @@
     .shell { padding: 0 24px; }
     .bar nav { display: none; }
     .download, .feature, .grid, .traffic, .faq, .versus { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .steps > div { padding: 0 0 20px; }
+    .steps > div + div { padding-left: 0; border-left: 0; }
     .spec > div { grid-template-columns: 1fr; gap: 6px; }
     .download { gap: 40px; }
     .feature { gap: 32px; }
@@ -345,6 +386,7 @@
       <nav>
         <a class="nav-link" href="#features">What it does</a>
         <a class="nav-link" href="#different">Why this</a>
+        <a class="nav-link" href="#roadmap">Coming next</a>
         <a class="nav-link" href="#privacy">Privacy</a>
         <a class="nav-link" href="#security">Security</a>
         <a class="nav-link" href="#releases">Releases</a>
@@ -650,11 +692,90 @@
     </div>
   </section>
 
-  <section class="band" id="security">
+  <section class="band" id="roadmap">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
           <span class="num">05</span>
+          <span class="label">Coming next</span>
+        </div>
+        <h2 class="serif-fit">Moving your books between machines, <em>without moving in.</em></h2>
+      </div>
+
+      <div class="soon">
+        <span class="soon-flag">Not built yet</span>
+        <h3 class="serif-fit">The cloud as a removal van, not a landlord</h3>
+
+        <p>
+          Every cloud accounting package works the same way: your books live on
+          their server, and the app on your desk is a window onto it. Stop paying
+          and the window closes.
+        </p>
+        <p>
+          The plan here inverts that. Your books stay on your machine. When you
+          want them on a second computer, you send an <strong>encrypted copy
+          up</strong>, pull it down on the other machine, and then
+          <strong>delete the copy from the cloud</strong> whenever you like. Both
+          computers keep their own full copy of everything. The cloud held it in
+          transit and holds nothing afterwards.
+        </p>
+
+        <div class="steps">
+          <div>
+            <span class="n">01</span>
+            <p>Encrypt and upload a copy from the machine that has your books.</p>
+          </div>
+          <div>
+            <span class="n">02</span>
+            <p>Download it on the second machine, which now holds its own full copy.</p>
+          </div>
+          <div>
+            <span class="n">03</span>
+            <p>Delete the cloud copy the moment you no longer need it — one button.</p>
+          </div>
+          <div>
+            <span class="n">04</span>
+            <p>Both machines keep working, online or off, with nothing left on a server.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top: 56px">
+        <div class="cell">
+          <h3 class="serif-fit">A cloud account will be optional, and paid</h3>
+          <p>
+            Keeping data on somebody else's hardware costs money, so the account
+            that does it will cost money. What it will not do is become the price
+            of opening your own books — the app works without one, and will keep
+            working without one.
+          </p>
+        </div>
+        <div class="cell">
+          <h3 class="serif-fit">Encrypted before it leaves</h3>
+          <p>
+            The intent is that anything uploaded is encrypted on your machine
+            first, so what sits in storage is not readable without your key. The
+            exact design will be written down here before it ships, not
+            afterwards.
+          </p>
+        </div>
+        <div class="cell">
+          <h3 class="serif-fit">Deletion that means deletion</h3>
+          <p>
+            Removing a cloud copy will remove it, not hide it behind a flag. It is
+            worth saying plainly because "delete" means several different things
+            across this industry.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="security">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">06</span>
           <span class="label">Security, specifically</span>
         </div>
         <h2 class="serif-fit">The details, so you can <em>judge them yourself.</em></h2>
@@ -750,7 +871,7 @@
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">06</span>
+          <span class="num">07</span>
           <span class="label">Releases</span>
         </div>
         <h2 class="serif-fit">Built in the open, <em>shipped often.</em></h2>
@@ -765,7 +886,7 @@
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">07</span>
+          <span class="num">08</span>
           <span class="label">Questions</span>
         </div>
         <h2 class="serif-fit">The things worth <em>asking first.</em></h2>
@@ -799,6 +920,10 @@
         <div>
           <h3>Which banks does it support?</h3>
           <p>Any bank that lets you download a statement — .ofx, .qfx and .qbo import directly, and CSV works with a quick column check. There is no bank connection to break.</p>
+        </div>
+        <div>
+          <h3>Will there ever be a cloud version?</h3>
+          <p>A paid cloud account is planned, and it is optional. It is designed to move an encrypted copy of your books between your own machines and then let you delete that copy — not to become the place your books live. See <a href="#roadmap">Coming next</a>.</p>
         </div>
         <div>
           <h3>Personal or business?</h3>
