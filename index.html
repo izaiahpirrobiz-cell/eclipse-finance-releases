@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Eclipse Finance — Download</title>
-<meta name="description" content="Bookkeeping that runs on your own computer. No account, no server, nothing to breach. Free for Windows, macOS and Linux.">
+<title>Eclipse Finance — bookkeeping that stays on your computer</title>
+<meta name="description" content="Bookkeeping that runs on your own computer. Reads your bank's own statement files, reconciles against them, and shows what the balance looks like six weeks out. No account, no server, nothing to breach.">
 <meta property="og:title" content="Eclipse Finance">
 <meta property="og:description" content="Bookkeeping that runs on your own computer. No account, no server, nothing to breach.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://finance.eclipsepublishingstudios.com/shots/cashflow.jpg">
 <!-- The page is a thin shell around a live API call, so a cached copy is
      always wrong rather than merely stale. -->
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
@@ -18,6 +19,7 @@
 <style>
   :root {
     --bg: #0a0a0a;
+    --raised: #101010;
     --rule: #232323;
     --ink: #ffffff;
     --soft: #a8a8a8;
@@ -40,33 +42,45 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  img { max-width: 100%; display: block; }
+
   .shell { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
 
-  header { border-bottom: 1px solid var(--rule); }
-  .bar { display: flex; align-items: center; gap: 20px; height: 92px; }
+  /* ---- header ---- */
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.86);
+    backdrop-filter: blur(10px);
+    z-index: 20;
+  }
+  .bar { display: flex; align-items: center; gap: 24px; height: 76px; }
 
   .lockup { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--ink); }
-  .lockup img { width: 30px; height: 30px; display: block; }
-  .lockup span { font-size: 15px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+  .lockup img { width: 26px; height: 26px; }
+  .lockup span { font-size: 14px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
   .lockup .thin { font-weight: 400; color: var(--soft); }
   .bar .spacer { flex: 1; }
 
+  .bar nav { display: flex; gap: 22px; }
+
   .up {
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--acid);
-    text-decoration: none;
+    font-size: 12px; font-weight: 800; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--acid); text-decoration: none;
   }
   .up:hover { color: #b9ef5e; }
 
-  /* .hero shares an element with .shell, so it must never use the padding
-     shorthand — that would reset the horizontal padding .shell just set and
-     slam the whole section against the window edge. Longhand only. */
-  .hero { padding-top: 96px; padding-bottom: 72px; }
+  .nav-link {
+    font-size: 12px; font-weight: 800; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--soft); text-decoration: none;
+  }
+  .nav-link:hover { color: var(--acid); }
 
-  .eyebrow { display: flex; align-items: baseline; gap: 18px; margin-bottom: 26px; }
+  /* ---- shared type ---- */
+
+  .eyebrow { display: flex; align-items: baseline; gap: 18px; margin-bottom: 24px; }
   .eyebrow .num { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
   .eyebrow .label {
     font-size: 12px; font-weight: 800; letter-spacing: 0.09em;
@@ -75,34 +89,24 @@
 
   /* Fraunces has deep descenders and the italic reaches further still, so a
      display line-height tuned by eye leaves the tail of a "p" painting
-     outside its own box — visible as a chopped letter, and clipped outright
-     the moment anything downstream sets overflow.
-  
-     Rather than tune a line-height until it happens to fit, every serif
-     heading gets a little padding on the descender side. Line-height alone
-     is a guess about one font's metrics; padding survives a font swap, a
-     variable-weight change, and whatever a browser decides to do with
-     fallback fonts on a machine that never loads Fraunces at all. */
-  .serif-fit {
-    padding-bottom: 0.1em;
-    /* The italic also overhangs to the right of its advance width, and by
-       more than a hair at the small end of the clamp. */
-    padding-right: 0.12em;
-  }
+     outside its own box. Padding on the descender side survives a font swap
+     and the fallback serif on a machine that never loads Fraunces at all,
+     which a tuned line-height does not. */
+  .serif-fit { padding-bottom: 0.1em; padding-right: 0.12em; }
 
   h1 {
-    margin: 0 0 24px;
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: clamp(42px, 6.6vw, 72px);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    margin: 0 0 24px; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(42px, 6.6vw, 72px); line-height: 1.2; letter-spacing: -0.02em;
   }
   h1 em { font-style: italic; color: var(--acid); }
 
   .lede { max-width: 34em; margin: 0; color: var(--soft); font-size: 17px; line-height: 1.65; }
 
-  .download { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; margin-top: 56px; align-items: start; }
+  /* ---- hero ---- */
+
+  .hero { padding-top: 84px; padding-bottom: 56px; }
+
+  .download { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; margin-top: 48px; align-items: start; }
 
   .get {
     display: block; padding: 26px 30px;
@@ -140,10 +144,30 @@
   .aside p:last-child { margin-bottom: 0; }
   .aside strong { color: var(--ink); font-weight: 600; }
 
-  .band { border-top: 1px solid var(--rule); padding: 72px 0; }
-  .band:last-of-type { padding-bottom: 96px; }
+  /* ---- screenshots ---- */
 
-  .band-head { margin-bottom: 44px; }
+  /* A thin frame and a soft lift, so a dark screenshot on a dark page reads
+     as a window into the app rather than a hole in the layout. */
+  .shot {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--raised);
+    box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.9);
+  }
+  .shot img { width: 100%; height: auto; }
+
+  .shot-hero { margin-top: 8px; }
+
+  .caption {
+    margin: 12px 0 0; font-size: 12.5px; color: var(--muted); text-align: center;
+  }
+
+  /* ---- feature bands ---- */
+
+  .band { border-top: 1px solid var(--rule); padding: 76px 0; }
+
+  .band-head { margin-bottom: 40px; }
   .band-head h2 {
     margin: 0; font-family: var(--serif);
     font-size: clamp(29px, 3.8vw, 40px);
@@ -152,25 +176,64 @@
   }
   .band-head h2 em { font-style: italic; color: var(--acid); }
 
+  .feature { display: grid; grid-template-columns: 1fr 1.25fr; gap: 56px; align-items: center; }
+  .feature + .feature { margin-top: 72px; padding-top: 72px; border-top: 1px solid var(--rule); }
+  .feature.flip .feature-text { order: 2; }
+
+  .feature h3 {
+    margin: 0 0 14px; font-family: var(--serif);
+    font-size: 26px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25;
+  }
+  .feature p { margin: 0 0 14px; color: var(--soft); font-size: 15px; line-height: 1.68; }
+  .feature p:last-child { margin-bottom: 0; }
+  .feature strong { color: var(--ink); font-weight: 600; }
+
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); }
   .cell { padding-right: 40px; }
   .cell + .cell { padding-left: 40px; padding-right: 40px; border-left: 1px solid var(--rule); }
   .cell:last-child { padding-right: 0; }
-
   .cell h3 {
     margin: 0 0 12px; font-family: var(--serif);
     font-size: 23px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3;
   }
   .cell p { margin: 0; color: var(--soft); font-size: 14.5px; line-height: 1.68; }
 
-  /* The plain-spoken list of what actually leaves the machine. Specific
-     enough to be checkable, because a security claim nobody can verify is
-     just a slogan. */
+  /* ---- what leaves the machine ---- */
+
   .traffic { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: 8px; }
   .traffic > div { padding: 14px 0; border-bottom: 1px solid var(--rule); }
   .traffic dt { font-size: 14.5px; font-weight: 600; color: var(--ink); }
   .traffic dd { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
   .traffic .never dt { color: var(--acid); }
+
+  /* ---- releases ---- */
+
+  .release { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .release:last-child { border-bottom: 0; }
+  .release-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .release-tag {
+    font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .release-date { font-size: 12.5px; color: var(--muted); }
+  .release-flag {
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--acid); border: 1px solid rgba(163, 230, 53, 0.3);
+    padding: 2px 7px; border-radius: 3px;
+  }
+  .release-notes {
+    margin: 8px 0 0; font-size: 14px; color: var(--soft); line-height: 1.65;
+    white-space: pre-wrap;
+  }
+
+  /* ---- faq ---- */
+
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px; }
+  .faq > div { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .faq h3 { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .faq p { margin: 0; font-size: 14px; color: var(--soft); line-height: 1.65; }
+  .faq a { color: var(--acid); text-decoration: none; }
+
+  /* ---- footer ---- */
 
   footer { border-top: 1px solid var(--rule); padding: 40px 0 64px; }
   .foot { display: flex; align-items: baseline; gap: 28px; flex-wrap: wrap; font-size: 13.5px; color: var(--muted); }
@@ -180,12 +243,16 @@
 
   @media (max-width: 900px) {
     .shell { padding: 0 24px; }
-    .download { grid-template-columns: 1fr; gap: 40px; }
+    .bar nav { display: none; }
+    .download, .feature, .grid, .traffic, .faq { grid-template-columns: 1fr; }
+    .download { gap: 40px; }
+    .feature { gap: 32px; }
+    .feature.flip .feature-text { order: 0; }
     .aside { border-left: 0; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 32px; }
-    .grid, .traffic { grid-template-columns: 1fr; }
     .cell { padding-right: 0; }
     .cell + .cell { padding-left: 0; padding-top: 36px; margin-top: 36px; border-left: 0; border-top: 1px solid var(--rule); }
-    .hero { padding-top: 64px; padding-bottom: 48px; }
+    .hero { padding-top: 56px; padding-bottom: 40px; }
+    .band { padding: 56px 0; }
   }
 </style>
 </head>
@@ -194,17 +261,23 @@
 <header>
   <div class="shell">
     <div class="bar">
-      <a class="lockup" href="https://eclipsepublishingstudios.com">
+      <a class="lockup" href="#top">
         <img src="eclipse-mark.png" alt="">
         <span>Eclipse <span class="thin">Finance</span></span>
       </a>
       <div class="spacer"></div>
+      <nav>
+        <a class="nav-link" href="#features">What it does</a>
+        <a class="nav-link" href="#privacy">Privacy</a>
+        <a class="nav-link" href="#releases">Releases</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+      </nav>
       <a class="up" href="https://eclipsepublishingstudios.com">Eclipse Publishing &nearr;</a>
     </div>
   </div>
 </header>
 
-<main>
+<main id="top">
   <section class="shell hero">
     <div class="eyebrow">
       <span class="num">01</span>
@@ -215,9 +288,9 @@
 
     <p class="lede">
       Every other bookkeeping app keeps your accounts on somebody else's
-      server. Eclipse Finance keeps them in a file on your disk. There is no
-      login to a company database, no copy of your revenue sitting in a
-      warehouse waiting to be breached, and nothing to cancel.
+      server. Eclipse Finance keeps them in a file on your disk. It reads the
+      statement files your bank already gives you, reconciles against them,
+      and tells you what the balance looks like six weeks out.
     </p>
 
     <div class="download">
@@ -250,11 +323,116 @@
     </div>
   </section>
 
-  <section class="band">
+  <!-- The single most useful thing on the page: the actual app. -->
+  <section class="shell" style="padding-bottom: 76px">
+    <div class="shot shot-hero">
+      <img src="shots/cashflow.jpg" width="1200" height="724"
+           alt="The cash flow screen: a projected balance line running ninety days forward, dipping below zero in December, with the scheduled bills and invoices that drive it listed beside it."
+           loading="lazy">
+    </div>
+    <p class="caption">Cash flow — where the balance is heading, and the day it is lowest.</p>
+  </section>
+
+  <section class="band" id="features">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
           <span class="num">02</span>
+          <span class="label">What it does</span>
+        </div>
+        <h2 class="serif-fit">Built for the small business that <em>does its own books.</em></h2>
+      </div>
+
+      <div class="feature">
+        <div class="feature-text">
+          <h3 class="serif-fit">It reads your bank's own files</h3>
+          <p>
+            Download the file your bank offers for Quicken — <strong>.ofx, .qfx or
+            .qbo</strong> — and it imports directly. No column mapping, no
+            spreadsheet surgery.
+          </p>
+          <p>
+            Those files carry the bank's own transaction ids, so importing the same
+            statement twice adds nothing the second time. It suggests categories
+            from how <em>you</em> have filed the same places before, and flags
+            anything that merely looks like a duplicate instead of deciding for you.
+          </p>
+        </div>
+        <div class="shot">
+          <img src="shots/import.jpg" width="1200" height="724"
+               alt="The import review: six transactions from a bank file, each with a suggested category and the reason for it, one flagged as a likely duplicate and unticked."
+               loading="lazy">
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="feature-text">
+          <h3 class="serif-fit">Tick your statement off, line by line</h3>
+          <p>
+            The opening balance carries from the last statement, so each one
+            continues the one before and the chain cannot be quietly re-based.
+          </p>
+          <p>
+            It only closes when the difference is zero — or when you knowingly
+            write a balancing entry, which appears in the register as a real
+            transaction rather than hiding in a fudge column. Reconciled lines
+            then <strong>lock</strong>, so the numbers cannot change behind you.
+          </p>
+        </div>
+        <div class="shot">
+          <img src="shots/reconcile.jpg" width="1200" height="724"
+               alt="The reconciliation sheet: statement date and closing balance at the top, lines to tick in the middle, and a running tally at the bottom showing how far out it is."
+               loading="lazy">
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-text">
+          <h3 class="serif-fit">Know what is coming before it leaves</h3>
+          <p>
+            Record a bill when it arrives, not when you pay it. Nothing moves until
+            you press Pay — but from that moment it counts against your forecast.
+          </p>
+          <p>
+            Aging buckets show how late everything is, because "we are sixty days
+            out on that" means something specific to both sides of a supplier call.
+          </p>
+        </div>
+        <div class="shot">
+          <img src="shots/bills.jpg" width="1200" height="724"
+               alt="The bills screen: total owed to suppliers, aging buckets from due-this-week through sixty days late, and a list of outstanding bills with pay buttons."
+               loading="lazy">
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="feature-text">
+          <h3 class="serif-fit">A register that reads like a statement</h3>
+          <p>
+            Date on the left, amount on the right, one line per transaction,
+            categories editable in place. Filter by date, category, amount or
+            whether a line has been reconciled — and the total updates with it.
+          </p>
+          <p>
+            Attach the receipt to the line it belongs to. The file is copied into
+            your books, so tidying your Downloads folder later cannot empty the
+            evidence behind a tax return.
+          </p>
+        </div>
+        <div class="shot">
+          <img src="shots/register.jpg" width="1200" height="724"
+               alt="The transaction register: a filter row across the top, running totals, and a list of transactions with editable categories and paperclip icons for attached receipts."
+               loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="privacy">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">03</span>
           <span class="label">Why that is safer</span>
         </div>
         <h2 class="serif-fit">The safest place for your accounts is <em>the one nobody else can reach.</em></h2>
@@ -282,44 +460,103 @@
         <div class="cell">
           <h3 class="serif-fit">Numbers that cannot change quietly</h3>
           <p>
-            Once a line is reconciled against a bank statement it is locked, and
-            editing it means undoing that statement first. Imported statements are
-            matched on the bank's own transaction ids, and anything that merely
-            looks like a duplicate is flagged for you rather than decided for you.
+            Once a line is reconciled it is locked, and editing it means undoing
+            that statement first. Imported statements match on the bank's own
+            transaction ids, and anything that merely looks like a duplicate is
+            flagged for you rather than decided for you.
           </p>
         </div>
+      </div>
+
+      <div style="margin-top: 60px">
+        <h3 class="serif-fit" style="font-family: var(--serif); font-size: 22px; font-weight: 600; margin: 0 0 6px">
+          Everything that leaves the machine
+        </h3>
+        <p style="margin: 0 0 4px; color: var(--muted); font-size: 14px">
+          The whole list, so you can check it yourself.
+        </p>
+
+        <dl class="traffic">
+          <div>
+            <dt>Checking for updates</dt>
+            <dd>Asks GitHub whether a newer version exists. Sends nothing about you.</dd>
+          </div>
+          <div>
+            <dt>Payment processors</dt>
+            <dd>Only if you connect Stripe, Square or PayPal yourself. Your keys live in your operating system's keychain, never in the app's own files.</dd>
+          </div>
+          <div>
+            <dt>The invitation list</dt>
+            <dd>During the private alpha, your email address when you sign in, to check you were invited.</dd>
+          </div>
+          <div class="never">
+            <dt>Nothing else. Ever.</dt>
+            <dd>No analytics, no telemetry, no crash reporting, no "anonymous usage data". Your transactions, balances, customers and receipts are never transmitted anywhere.</dd>
+          </div>
+        </dl>
       </div>
     </div>
   </section>
 
-  <section class="band">
+  <section class="band" id="releases">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">03</span>
-          <span class="label">What leaves the machine</span>
+          <span class="num">04</span>
+          <span class="label">Releases</span>
         </div>
-        <h2 class="serif-fit">The whole list, so you can <em>check it yourself.</em></h2>
+        <h2 class="serif-fit">Built in the open, <em>shipped often.</em></h2>
+      </div>
+      <div id="release-list">
+        <p style="color: var(--muted); font-size: 14px">Loading the release history…</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">05</span>
+          <span class="label">Questions</span>
+        </div>
+        <h2 class="serif-fit">The things worth <em>asking first.</em></h2>
       </div>
 
-      <dl class="traffic">
+      <div class="faq">
         <div>
-          <dt>Checking for updates</dt>
-          <dd>Asks GitHub whether a newer version exists. Sends nothing about you.</dd>
-        </div>
-        <div>
-          <dt>Payment processors</dt>
-          <dd>Only if you connect Stripe, Square or PayPal yourself. Your keys are held in your operating system's keychain, never in the app's own files.</dd>
+          <h3>What does it cost?</h3>
+          <p>Nothing, during the alpha. There is no subscription and no account, so there is nothing to cancel if you stop using it.</p>
         </div>
         <div>
-          <dt>The invitation list</dt>
-          <dd>During the private alpha, your email address when you sign in, to check you were invited.</dd>
+          <h3>Can I try it right now?</h3>
+          <p>It is invite-only while it is an alpha. <a href="https://eclipsepublishingstudios.com/support">Ask for an invitation</a> and you will be added to the list.</p>
         </div>
-        <div class="never">
-          <dt>Nothing else. Ever.</dt>
-          <dd>No analytics, no telemetry, no crash reporting, no "anonymous usage data". Your transactions, balances, customers and receipts are never transmitted anywhere.</dd>
+        <div>
+          <h3>Where exactly are my books kept?</h3>
+          <p>In a single database file in your user folder, alongside a folder of any receipts you attach. Settings shows you the exact path, and opens it.</p>
         </div>
-      </dl>
+        <div>
+          <h3>Is the file encrypted?</h3>
+          <p>No — it is protected by your computer's user account, like every other file on your disk. Payment-processor keys <em>are</em> encrypted, in your OS keychain. We would rather say this plainly than imply more.</p>
+        </div>
+        <div>
+          <h3>What if I stop using it?</h3>
+          <p>Export the register to CSV, or take a backup. Nothing is held hostage, because nothing of yours is anywhere we control.</p>
+        </div>
+        <div>
+          <h3>Does it work offline?</h3>
+          <p>Yes. Everything except syncing a payment processor and checking for updates works with no connection at all.</p>
+        </div>
+        <div>
+          <h3>Which banks does it support?</h3>
+          <p>Any bank that lets you download a statement — .ofx, .qfx and .qbo import directly, and CSV works with a quick column check. There is no bank connection to break.</p>
+        </div>
+        <div>
+          <h3>Personal or business?</h3>
+          <p>Both, and they are kept separate. A business book gets invoices, customers and payment links; a personal one gets net worth instead and is not cluttered with the rest.</p>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -371,6 +608,8 @@
 
   const PREFERRED = { win: 'win', mac: 'mac-arm64', linux: 'linux-app' };
   const mb = (bytes) => `${(bytes / 1048576).toFixed(0)} MB`;
+  const when = (iso) =>
+    new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 
   function fail(message) {
     label.textContent = 'Downloads on GitHub';
@@ -379,15 +618,58 @@
     primary.setAttribute('aria-disabled', 'false');
   }
 
+  /** Release notes are author-written text; insert them as text, never HTML. */
+  function renderReleases(releases) {
+    const host = document.getElementById('release-list');
+    host.textContent = '';
+
+    for (const release of releases.slice(0, 5)) {
+      const box = document.createElement('div');
+      box.className = 'release';
+
+      const head = document.createElement('div');
+      head.className = 'release-head';
+
+      const tag = document.createElement('span');
+      tag.className = 'release-tag serif-fit';
+      tag.textContent = release.tag_name;
+      head.append(tag);
+
+      if (release.prerelease) {
+        const flag = document.createElement('span');
+        flag.className = 'release-flag';
+        flag.textContent = 'Pre-release';
+        head.append(flag);
+      }
+
+      const date = document.createElement('span');
+      date.className = 'release-date';
+      date.textContent = when(release.published_at);
+      head.append(date);
+
+      box.append(head);
+
+      const body = (release.body || '').trim();
+      if (body) {
+        const notes = document.createElement('p');
+        notes.className = 'release-notes';
+        notes.textContent = body.length > 420 ? `${body.slice(0, 420).trimEnd()}…` : body;
+        box.append(notes);
+      }
+
+      host.append(box);
+    }
+  }
+
   async function load() {
     let releases;
     try {
       // The releases *list*, not /releases/latest. GitHub's "latest" excludes
       // pre-releases, so while this ships alphas that endpoint returns a 404
       // and any link built on it is dead.
-      // no-store, because the answer changes every release and a browser
-      // holding a cached one shows somebody a download that is two versions
-      // old with no hint anything is wrong.
+      //
+      // no-store, because a browser holding a cached answer offers a download
+      // two versions old with nothing on screen to suggest it.
       const response = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=10`, {
         headers: { Accept: 'application/vnd.github+json' },
         cache: 'no-store'
@@ -396,14 +678,19 @@
       releases = await response.json();
     } catch {
       fail('Could not reach GitHub just now — every build is on the releases page.');
+      document.getElementById('release-list').textContent =
+        'The release history could not be loaded just now.';
       return;
     }
 
-    const release = releases.find((r) => !r.draft);
+    const published = releases.filter((r) => !r.draft);
+    const release = published[0];
     if (!release || !release.assets || release.assets.length === 0) {
       fail('No build has been published yet.');
       return;
     }
+
+    renderReleases(published);
 
     // Metadata the updater reads, and nobody browsing this page wants.
     const assets = release.assets.filter(
@@ -448,11 +735,8 @@
       document.getElementById('others').hidden = false;
     }
 
-    const published = new Date(release.published_at).toLocaleDateString(undefined, {
-      year: 'numeric', month: 'long', day: 'numeric'
-    });
     document.getElementById('release-line').innerHTML =
-      `${release.prerelease ? 'Pre-release' : 'Version'} ${release.tag_name}, ${published}. ` +
+      `${release.prerelease ? 'Pre-release' : 'Version'} ${release.tag_name}, ${when(release.published_at)}. ` +
       `Every build is on the <a href="${RELEASES_PAGE}">releases page</a>.`;
   }
 
