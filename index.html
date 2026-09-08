@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Eclipse Finance — bookkeeping that stays on your computer</title>
-<meta name="description" content="Bookkeeping that runs on your own computer. Your books live in a file on your disk, it works offline, and it reads the statement files your bank already gives you.">
+<title>Eclipse Finance — finances you can actually read</title>
+<meta name="description" content="Bookkeeping that works online or off, keeps your books on your own disk or in the cloud as you choose, and bends to how your business actually runs. Windows, macOS and Linux.">
 <meta property="og:title" content="Eclipse Finance">
-<meta property="og:description" content="Bookkeeping that runs on your own computer. Your books stay yours.">
+<meta property="og:description" content="Finances you can actually read. Online or off, local or cloud — your choice.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://finance.eclipsepublishingstudios.com/shots/cashflow.jpg">
 <!-- The page is a thin shell around a live API call, so a cached copy is
@@ -25,6 +25,7 @@
     --soft: #a8a8a8;
     --muted: #6f6f6f;
     --acid: #a3e635;
+    --warn: #ffc46b;
     --serif: Fraunces, Georgia, "Times New Roman", serif;
     --sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
   }
@@ -43,42 +44,46 @@
   }
 
   img { max-width: 100%; display: block; }
-
   .shell { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+  /* Headings break where the line lengths come out even, rather than filling
+     each line to the edge and dropping whatever is left onto its own row.
+     Done by the browser, not with hand-placed breaks, which look right at
+     exactly one window width. */
+  h1, h2, h3, .get-label, .release-tag, .traffic dt { text-wrap: balance; }
+  p, dd, .lede, .caption { text-wrap: pretty; }
+
+  /* Fraunces has deep descenders and the italic reaches further still, so
+     padding on that side keeps the glyphs inside their own box. It survives
+     a font swap; a tuned line-height does not. */
+  .serif-fit { padding-bottom: 0.1em; padding-right: 0.12em; }
 
   /* ---- header ---- */
 
   header {
     border-bottom: 1px solid var(--rule);
-    position: sticky;
-    top: 0;
+    position: sticky; top: 0; z-index: 20;
     background: rgba(10, 10, 10, 0.86);
     backdrop-filter: blur(10px);
-    z-index: 20;
   }
   .bar { display: flex; align-items: center; gap: 24px; height: 76px; }
-
   .lockup { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--ink); }
   .lockup img { width: 26px; height: 26px; }
   .lockup span { font-size: 14px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
   .lockup .thin { font-weight: 400; color: var(--soft); }
   .bar .spacer { flex: 1; }
-
   .bar nav { display: flex; gap: 22px; }
 
-  .up {
+  .up, .nav-link {
     font-size: 12px; font-weight: 800; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--acid); text-decoration: none;
+    text-transform: uppercase; text-decoration: none;
   }
+  .up { color: var(--acid); }
   .up:hover { color: #b9ef5e; }
-
-  .nav-link {
-    font-size: 12px; font-weight: 800; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--soft); text-decoration: none;
-  }
+  .nav-link { color: var(--soft); }
   .nav-link:hover { color: var(--acid); }
 
-  /* ---- shared type ---- */
+  /* ---- shared ---- */
 
   .eyebrow { display: flex; align-items: baseline; gap: 18px; margin-bottom: 24px; }
   .eyebrow .num { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
@@ -87,41 +92,27 @@
     text-transform: uppercase; color: var(--acid);
   }
 
-  /* Fraunces has deep descenders and the italic reaches further still, so a
-     display line-height tuned by eye leaves the tail of a "p" painting
-     outside its own box. Padding on the descender side survives a font swap
-     and the fallback serif on a machine that never loads Fraunces at all,
-     which a tuned line-height does not. */
-  .serif-fit { padding-bottom: 0.1em; padding-right: 0.12em; }
-
-  /* Headings break where the line lengths come out even, rather than filling
-     each line to the edge and dropping whatever is left onto its own row.
-     "Know what is coming before it / leaves" is what the greedy default
-     does; balance turns it into two sensible halves.
-  
-     Applied by the browser, not by hand-placed line breaks — those look
-     right at exactly one width and wrong at every other. */
-  h1, h2, h3, .get-label, .release-tag, .faq h3, .traffic dt {
-    text-wrap: balance;
-  }
-
-  /* And body copy avoids leaving a single word alone on the last line. */
-  p, dd, .lede, .caption {
-    text-wrap: pretty;
-  }
-
   h1 {
     margin: 0 0 24px; font-family: var(--serif); font-weight: 600;
-    font-size: clamp(42px, 6.6vw, 72px); line-height: 1.2; letter-spacing: -0.02em;
+    font-size: clamp(42px, 6.4vw, 70px); line-height: 1.2; letter-spacing: -0.02em;
   }
   h1 em { font-style: italic; color: var(--acid); }
 
-  .lede { max-width: 34em; margin: 0; color: var(--soft); font-size: 17px; line-height: 1.65; }
+  .lede { max-width: 36em; margin: 0; color: var(--soft); font-size: 17px; line-height: 1.65; }
+
+  .band { border-top: 1px solid var(--rule); padding: 76px 0; }
+  .band-head { margin-bottom: 40px; }
+  .band-head h2 {
+    margin: 0; font-family: var(--serif);
+    font-size: clamp(29px, 3.8vw, 40px);
+    font-weight: 600; letter-spacing: -0.02em; line-height: 1.24; max-width: 20em;
+  }
+  .band-head h2 em { font-style: italic; color: var(--acid); }
+  .band-sub { margin: 14px 0 0; max-width: 40em; color: var(--soft); font-size: 15.5px; }
 
   /* ---- hero ---- */
 
   .hero { padding-top: 84px; padding-bottom: 56px; }
-
   .download { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; margin-top: 48px; align-items: start; }
 
   .get {
@@ -133,7 +124,6 @@
   }
   .get:hover { background: rgba(163, 230, 53, 0.1); border-color: rgba(163, 230, 53, 0.6); transform: translateY(-1px); }
   .get[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
-
   .get-label {
     display: block; font-family: var(--serif); font-size: 26px;
     font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--acid);
@@ -145,7 +135,6 @@
     margin: 0 0 4px; font-size: 12px; font-weight: 800;
     letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
   }
-
   .row { display: flex; align-items: baseline; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--rule); }
   .row a { color: var(--soft); text-decoration: none; font-size: 14.5px; }
   .row a:hover { color: var(--acid); }
@@ -160,42 +149,35 @@
   .aside p:last-child { margin-bottom: 0; }
   .aside strong { color: var(--ink); font-weight: 600; }
 
-  /* ---- screenshots ---- */
+  /* ---- the four principles ---- */
 
-  /* A thin frame and a soft lift, so a dark screenshot on a dark page reads
-     as a window into the app rather than a hole in the layout. */
+  .pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+  .pillar { padding: 32px 40px 32px 0; border-top: 1px solid var(--rule); }
+  .pillar:nth-child(even) { padding-left: 40px; padding-right: 0; border-left: 1px solid var(--rule); }
+  .pillar h3 {
+    margin: 0 0 10px; font-family: var(--serif);
+    font-size: 24px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.28;
+  }
+  .pillar p { margin: 0; font-size: 14.5px; color: var(--soft); line-height: 1.68; }
+  .pillar .tag {
+    display: inline-block; margin-bottom: 12px;
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--warn); border: 1px solid rgba(255, 196, 107, 0.3);
+    padding: 2px 8px; border-radius: 3px;
+  }
+
+  /* ---- screenshots and features ---- */
+
   .shot {
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--raised);
-    box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.9);
+    border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+    background: var(--raised); box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.9);
   }
   .shot img { width: 100%; height: auto; }
-
-  .shot-hero { margin-top: 8px; }
-
-  .caption {
-    margin: 12px 0 0; font-size: 12.5px; color: var(--muted); text-align: center;
-  }
-
-  /* ---- feature bands ---- */
-
-  .band { border-top: 1px solid var(--rule); padding: 76px 0; }
-
-  .band-head { margin-bottom: 40px; }
-  .band-head h2 {
-    margin: 0; font-family: var(--serif);
-    font-size: clamp(29px, 3.8vw, 40px);
-    font-weight: 600; letter-spacing: -0.02em; line-height: 1.24;
-    max-width: 20em;
-  }
-  .band-head h2 em { font-style: italic; color: var(--acid); }
+  .caption { margin: 12px 0 0; font-size: 12.5px; color: var(--muted); text-align: center; }
 
   .feature { display: grid; grid-template-columns: 1fr 1.25fr; gap: 56px; align-items: center; }
   .feature + .feature { margin-top: 72px; padding-top: 72px; border-top: 1px solid var(--rule); }
   .feature.flip .feature-text { order: 2; }
-
   .feature h3 {
     margin: 0 0 14px; font-family: var(--serif);
     font-size: 26px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25;
@@ -208,107 +190,57 @@
   .cell { padding-right: 40px; }
   .cell + .cell { padding-left: 40px; padding-right: 40px; border-left: 1px solid var(--rule); }
   .cell:last-child { padding-right: 0; }
-  .cell h3 {
-    margin: 0 0 12px; font-family: var(--serif);
-    font-size: 23px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3;
-  }
-  .cell p { margin: 0; color: var(--soft); font-size: 14.5px; line-height: 1.68; }
-
-  /* ---- what leaves the machine ---- */
-
-  .traffic { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: 8px; }
-  .traffic > div { padding: 14px 0; border-bottom: 1px solid var(--rule); }
-  .traffic dt { font-size: 14.5px; font-weight: 600; color: var(--ink); }
-  .traffic dd { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
-  .traffic .never dt { color: var(--acid); }
-
-  /* ---- how this differs ---- */
-
-  .versus { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 56px; }
-  .versus > div { padding-top: 4px; }
-  .versus h3 {
-    margin: 0 0 12px; font-family: var(--serif);
-    font-size: 23px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3;
-  }
-  .versus p { margin: 0 0 12px; font-size: 14.5px; line-height: 1.68; color: var(--soft); }
-  .versus p:last-child { margin-bottom: 0; }
-
-  /* The way everyone else does it, set back so the contrast is visible
-     without a table that would invite arguing over the cells. */
-  .versus-them {
-    color: var(--muted) !important;
-    border-left: 2px solid var(--rule);
-    padding-left: 16px;
-  }
 
   /* ---- coming next ---- */
 
-  /* Marked as unbuilt everywhere it appears. A roadmap that reads like a
-     feature list is how a page loses the trust the rest of it is arguing
-     for. */
+  /* Marked unbuilt in the markup and again in the copy. A roadmap that reads
+     like a feature list costs the trust the rest of the page argues for. */
   .soon {
-    border: 1px solid rgba(163, 230, 53, 0.22);
-    border-radius: 10px;
-    padding: 34px 36px;
-    background: rgba(163, 230, 53, 0.03);
+    border: 1px solid rgba(163, 230, 53, 0.22); border-radius: 10px;
+    padding: 34px 36px; background: rgba(163, 230, 53, 0.03);
   }
-
+  .soon + .soon { margin-top: 24px; }
   .soon-flag {
-    display: inline-block;
-    font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--acid);
-    border: 1px solid rgba(163, 230, 53, 0.32);
-    padding: 3px 9px; border-radius: 3px; margin-bottom: 18px;
+    display: inline-block; margin-bottom: 16px;
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--warn); border: 1px solid rgba(255, 196, 107, 0.32);
+    padding: 3px 9px; border-radius: 3px;
   }
-
   .soon h3 {
-    margin: 0 0 14px; font-family: var(--serif);
-    font-size: 26px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25;
+    margin: 0 0 12px; font-family: var(--serif);
+    font-size: 25px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25;
   }
-  .soon > p { margin: 0 0 16px; font-size: 15px; color: var(--soft); line-height: 1.68; }
-  .soon > p:last-child { margin-bottom: 0; }
+  .soon p { margin: 0 0 14px; font-size: 15px; color: var(--soft); line-height: 1.68; }
+  .soon p:last-child { margin-bottom: 0; }
   .soon strong { color: var(--ink); font-weight: 600; }
 
-  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 28px 0 8px; }
-  .steps > div { padding-right: 28px; }
-  .steps > div + div { padding-left: 28px; padding-right: 28px; border-left: 1px solid var(--rule); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 26px 0 4px; }
+  .steps > div { padding-right: 26px; }
+  .steps > div + div { padding-left: 26px; padding-right: 26px; border-left: 1px solid var(--rule); }
   .steps > div:last-child { padding-right: 0; }
   .steps .n {
     display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.08em;
     color: var(--acid); margin-bottom: 8px;
   }
-  .steps p { margin: 0; font-size: 13.5px; color: var(--soft); line-height: 1.6; }
+  .steps p { margin: 0; font-size: 13.5px; line-height: 1.6; }
 
-  /* ---- security detail ---- */
+  /* ---- security ---- */
 
-  /* Specifics, in a table, because a security claim is only worth anything
-     if somebody can check it. Vague reassurance goes in the marketing copy
-     above; this is the part an actual engineer would read. */
   .spec { margin-top: 8px; }
   .spec > div {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 32px;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 220px 1fr; gap: 32px;
+    padding: 18px 0; border-bottom: 1px solid var(--rule);
   }
-  .spec dt {
-    font-size: 14px; font-weight: 600; color: var(--ink);
-  }
+  .spec dt { font-size: 14px; font-weight: 600; color: var(--ink); }
   .spec dd { margin: 0; font-size: 14px; color: var(--soft); line-height: 1.68; }
   .spec code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 12.5px; color: var(--acid);
   }
 
-  /* The limits get the same weight as the strengths. A security page that
-     only lists wins is an advert. */
   .limits {
-    margin-top: 44px;
-    border: 1px solid rgba(255, 196, 107, 0.26);
-    border-radius: 8px;
-    padding: 26px 30px;
-    background: rgba(255, 196, 107, 0.035);
+    margin-top: 44px; border: 1px solid rgba(255, 196, 107, 0.26); border-radius: 8px;
+    padding: 26px 30px; background: rgba(255, 196, 107, 0.035);
   }
   .limits h3 {
     margin: 0 0 6px; font-family: var(--serif); font-size: 22px;
@@ -316,17 +248,21 @@
   }
   .limits > p { margin: 0 0 18px; font-size: 14px; color: var(--soft); }
   .limits dl { margin: 0; }
-  .limits dt { font-size: 14px; font-weight: 600; color: #ffc46b; margin-top: 16px; }
+  .limits dt { font-size: 14px; font-weight: 600; color: var(--warn); margin-top: 16px; }
   .limits dd { margin: 4px 0 0; font-size: 14px; color: var(--soft); line-height: 1.68; }
+
+  .traffic { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: 8px; }
+  .traffic > div { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .traffic dt { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+  .traffic dd { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .traffic .never dt { color: var(--acid); }
 
   /* ---- releases ---- */
 
   .release { padding: 20px 0; border-bottom: 1px solid var(--rule); }
   .release:last-child { border-bottom: 0; }
   .release-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-  .release-tag {
-    font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: -0.01em;
-  }
+  .release-tag { font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
   .release-date { font-size: 12.5px; color: var(--muted); }
   .release-flag {
     font-size: 10.5px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
@@ -334,8 +270,8 @@
     padding: 2px 7px; border-radius: 3px;
   }
   .release-notes {
-    margin: 8px 0 0; font-size: 14px; color: var(--soft); line-height: 1.65;
-    white-space: pre-wrap;
+    margin: 8px 0 0; font-size: 14px; color: var(--soft);
+    line-height: 1.65; white-space: pre-wrap;
   }
 
   /* ---- faq ---- */
@@ -357,17 +293,17 @@
   @media (max-width: 900px) {
     .shell { padding: 0 24px; }
     .bar nav { display: none; }
-    .download, .feature, .grid, .traffic, .faq, .versus { grid-template-columns: 1fr; }
-    .steps { grid-template-columns: 1fr 1fr; }
-    .steps > div { padding: 0 0 20px; }
-    .steps > div + div { padding-left: 0; border-left: 0; }
-    .spec > div { grid-template-columns: 1fr; gap: 6px; }
+    .download, .feature, .grid, .traffic, .faq, .pillars { grid-template-columns: 1fr; }
     .download { gap: 40px; }
     .feature { gap: 32px; }
     .feature.flip .feature-text { order: 0; }
     .aside { border-left: 0; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 32px; }
     .cell { padding-right: 0; }
     .cell + .cell { padding-left: 0; padding-top: 36px; margin-top: 36px; border-left: 0; border-top: 1px solid var(--rule); }
+    .pillar, .pillar:nth-child(even) { padding: 28px 0; border-left: 0; }
+    .spec > div { grid-template-columns: 1fr; gap: 6px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .steps > div, .steps > div + div { padding: 0 0 20px; border-left: 0; }
     .hero { padding-top: 56px; padding-bottom: 40px; }
     .band { padding: 56px 0; }
   }
@@ -384,10 +320,9 @@
       </a>
       <div class="spacer"></div>
       <nav>
+        <a class="nav-link" href="#principles">Principles</a>
         <a class="nav-link" href="#features">What it does</a>
-        <a class="nav-link" href="#different">Why this</a>
         <a class="nav-link" href="#roadmap">Coming next</a>
-        <a class="nav-link" href="#privacy">Privacy</a>
         <a class="nav-link" href="#security">Security</a>
         <a class="nav-link" href="#releases">Releases</a>
         <a class="nav-link" href="#faq">FAQ</a>
@@ -404,14 +339,13 @@
       <span class="label">Download</span>
     </div>
 
-    <h1 class="serif-fit">Your books stay <em>yours.</em></h1>
+    <h1 class="serif-fit">Finances you can <em>actually read.</em></h1>
 
     <p class="lede">
-      Your accounts live in a file on your own disk. The app works with the
-      network unplugged, exports everything on demand, and tells you exactly
-      what it sends and where. It reads the statement files your bank already
-      gives you, reconciles against them, and shows what the balance looks
-      like six weeks out.
+      Bookkeeping that works online or off, keeps your books on your own disk
+      or in the cloud as you choose, and bends to how your business actually
+      runs instead of the other way round. Cheap on purpose — knowing where
+      your money stands should not be a line item you dread.
     </p>
 
     <div class="download">
@@ -444,9 +378,8 @@
     </div>
   </section>
 
-  <!-- The single most useful thing on the page: the actual app. -->
   <section class="shell" style="padding-bottom: 76px">
-    <div class="shot shot-hero">
+    <div class="shot">
       <img src="shots/cashflow.jpg" width="1200" height="724"
            alt="The cash flow screen: a projected balance line running ninety days forward, dipping below zero in December, with the scheduled bills and invoices that drive it listed beside it."
            loading="lazy">
@@ -454,14 +387,75 @@
     <p class="caption">Cash flow — where the balance is heading, and the day it is lowest.</p>
   </section>
 
-  <section class="band" id="features">
+  <section class="band" id="principles">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
           <span class="num">02</span>
+          <span class="label">What it is built on</span>
+        </div>
+        <h2 class="serif-fit">Four decisions everything else <em>follows from.</em></h2>
+        <p class="band-sub">
+          Most accounting software makes these choices for you. Here they are
+          yours, and they are the reason the rest of the app looks the way it does.
+        </p>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar">
+          <h3 class="serif-fit">Online or off — it does not care</h3>
+          <p>
+            Every screen works with the network unplugged. No loading spinner
+            waiting on a server, no "you appear to be offline", no afternoon lost
+            because somebody else's service is having a bad day. Connect it when
+            you want a payment processor synced or an update; the rest of the time
+            it simply does not need to be.
+          </p>
+        </div>
+
+        <div class="pillar">
+          <h3 class="serif-fit">Local or cloud — and you can change your mind</h3>
+          <p>
+            Your books are a file on your own disk. Want them on a second machine?
+            An optional cloud account will carry an encrypted copy across, and let
+            you delete that copy once it has arrived. Where your data sits is a
+            setting, not a business model.
+          </p>
+        </div>
+
+        <div class="pillar">
+          <span class="tag">Coming</span>
+          <h3 class="serif-fit">Room for more than one of you</h3>
+          <p>
+            Teams are being built so an owner, a bookkeeper and an accountant can
+            work in the same books at the same time, rather than emailing a
+            spreadsheet in circles and hoping nobody edited the wrong copy. One set
+            of numbers, several people, and a record of who changed what.
+          </p>
+        </div>
+
+        <div class="pillar">
+          <h3 class="serif-fit">Shaped around your business, not a template</h3>
+          <p>
+            Categories, tax buckets, budget periods and automatic rules are all
+            yours to define, and the app grows as you add to it. A shop, a
+            freelancer and a household do not think about money the same way, and
+            none of them should have to adopt somebody else's chart of accounts to
+            get started.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="features">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">03</span>
           <span class="label">What it does</span>
         </div>
-        <h2 class="serif-fit">Built for the small business that <em>does its own books.</em></h2>
+        <h2 class="serif-fit">Numbers that explain themselves <em>at a glance.</em></h2>
       </div>
 
       <div class="feature">
@@ -470,13 +464,13 @@
           <p>
             Download the file your bank offers for Quicken — <strong>.ofx, .qfx or
             .qbo</strong> — and it imports directly. No column mapping, no
-            spreadsheet surgery.
+            spreadsheet surgery, and no third party holding your banking login.
           </p>
           <p>
             Those files carry the bank's own transaction ids, so importing the same
             statement twice adds nothing the second time. It suggests categories
-            from how <em>you</em> have filed the same places before, and flags
-            anything that merely looks like a duplicate instead of deciding for you.
+            from how <em>you</em> filed the same places before, and flags anything
+            that merely looks like a duplicate instead of deciding for you.
           </p>
         </div>
         <div class="shot">
@@ -496,8 +490,8 @@
           <p>
             It only closes when the difference is zero — or when you knowingly
             write a balancing entry, which appears in the register as a real
-            transaction rather than hiding in a fudge column. Reconciled lines
-            then <strong>lock</strong>, so the numbers cannot change behind you.
+            transaction rather than hiding in a fudge column. Reconciled lines then
+            <strong>lock</strong>, so last quarter cannot change under you.
           </p>
         </div>
         <div class="shot">
@@ -532,7 +526,7 @@
           <p>
             Date on the left, amount on the right, one line per transaction,
             categories editable in place. Filter by date, category, amount or
-            whether a line has been reconciled — and the total updates with it.
+            whether a line is reconciled — and the totals move with the filter.
           </p>
           <p>
             Attach the receipt to the line it belongs to. The file is copied into
@@ -549,48 +543,145 @@
     </div>
   </section>
 
-  <section class="band" id="privacy">
+  <section class="band" id="roadmap">
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">03</span>
-          <span class="label">Why that is safer</span>
+          <span class="num">04</span>
+          <span class="label">Coming next</span>
         </div>
-        <h2 class="serif-fit">The safest place for your accounts is <em>the one nobody else can reach.</em></h2>
+        <h2 class="serif-fit">Where this is going, <em>said before it is built.</em></h2>
+        <p class="band-sub">
+          Everything below is planned rather than finished. It is written here in
+          advance so you can hold the work to it.
+        </p>
       </div>
 
-      <div class="grid">
-        <div class="cell">
-          <h3 class="serif-fit">Your data has a home, and it is here</h3>
-          <p>
-            Your books are a file on your own disk that you can copy, back up or
-            take elsewhere whenever you like. Nothing about the app depends on a
-            connection: unplug the network and every screen still works. Anything
-            that ever syncs will be something you switch on, and this page will
-            say so.
-          </p>
-        </div>
-        <div class="cell">
-          <h3 class="serif-fit">Backups that actually come back</h3>
-          <p>
-            One file holds your ledger and every receipt, each with a checksum. A
-            damaged backup is refused rather than half-restored, and restoring one
-            sets your current books aside instead of overwriting them — so the
-            wrong backup is not the last mistake you get to make.
-          </p>
-        </div>
-        <div class="cell">
-          <h3 class="serif-fit">Numbers that cannot change quietly</h3>
-          <p>
-            Once a line is reconciled it is locked, and editing it means undoing
-            that statement first. Imported statements match on the bank's own
-            transaction ids, and anything that merely looks like a duplicate is
-            flagged for you rather than decided for you.
-          </p>
+      <div class="soon">
+        <span class="soon-flag">Not built yet</span>
+        <h3 class="serif-fit">The cloud as a removal van, not a landlord</h3>
+        <p>
+          Every cloud accounting package works the same way: your books live on
+          their server and the app on your desk is a window onto it. Stop paying
+          and the window closes.
+        </p>
+        <p>
+          The plan here inverts that. Your books stay on your machine. When you
+          want them on a second computer you send an <strong>encrypted copy
+          up</strong>, pull it down on the other machine, then <strong>delete the
+          cloud copy</strong> whenever you like. Both computers keep their own full
+          copy. The cloud held it in transit and holds nothing afterwards.
+        </p>
+
+        <div class="steps">
+          <div>
+            <span class="n">01</span>
+            <p>Encrypt and upload a copy from the machine that has your books.</p>
+          </div>
+          <div>
+            <span class="n">02</span>
+            <p>Download it on the second machine, which now holds its own full copy.</p>
+          </div>
+          <div>
+            <span class="n">03</span>
+            <p>Delete the cloud copy the moment you no longer need it.</p>
+          </div>
+          <div>
+            <span class="n">04</span>
+            <p>Both machines keep working, online or off, with nothing left on a server.</p>
+          </div>
         </div>
       </div>
 
-      <div style="margin-top: 60px">
+      <div class="soon">
+        <span class="soon-flag">Not built yet</span>
+        <h3 class="serif-fit">Teams, for the books more than one person touches</h3>
+        <p>
+          Most small businesses have at least two people near the numbers — an
+          owner and a bookkeeper, a partner, an accountant at quarter end. Today
+          that means passing a file back and forth and hoping nobody edits the
+          wrong copy.
+        </p>
+        <p>
+          Teams will let several people work in the same books at once, each with
+          their own sign-in, and keep a record of who changed what. The audit trail
+          the app already writes exists for exactly this.
+        </p>
+      </div>
+
+      <div class="soon">
+        <span class="soon-flag">Planned</span>
+        <h3 class="serif-fit">A cloud account will be optional, and cheap</h3>
+        <p>
+          Storing data on somebody else's hardware costs money, so the account that
+          does it will cost money. What it will never do is become the price of
+          opening your own books: the app works without one and will keep working
+          without one, and the file on your disk stays readable whether or not you
+          are a customer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="security">
+    <div class="shell">
+      <div class="band-head">
+        <div class="eyebrow">
+          <span class="num">05</span>
+          <span class="label">Security, specifically</span>
+        </div>
+        <h2 class="serif-fit">The details, so you can <em>judge them yourself.</em></h2>
+      </div>
+
+      <dl class="spec">
+        <div>
+          <dt>Your password</dt>
+          <dd>
+            Hashed with <code>scrypt</code> at N=2<sup>15</sup>, r=8 — deliberately
+            slow and memory-hard, so guessing at it costs real hardware. Compared in
+            constant time, so how long a wrong answer takes reveals nothing about
+            how close it was.
+          </dd>
+        </div>
+        <div>
+          <dt>Payment processor keys</dt>
+          <dd>
+            Encrypted by your operating system's own keychain — DPAPI on Windows,
+            Keychain on macOS, libsecret on Linux — and tied to your OS user
+            account. Where no keychain exists they fall back to
+            <code>AES-256-GCM</code> under your passphrase. Plaintext keys are held
+            only long enough to sign one request and never reach the part of the app
+            that draws the screen.
+          </dd>
+        </div>
+        <div>
+          <dt>Your recovery code</dt>
+          <dd>
+            160 bits from the system random source, shown once, stored only as a
+            hash. Single use: recovering with it clears it, because a live recovery
+            code is a second permanent key to your books.
+          </dd>
+        </div>
+        <div>
+          <dt>Backups</dt>
+          <dd>
+            Every file inside a backup carries a <code>SHA-256</code> checksum. A
+            damaged or truncated archive is refused rather than half-restored, and a
+            restore verifies everything before touching what you have — then sets
+            the old copy aside rather than deleting it.
+          </dd>
+        </div>
+        <div>
+          <dt>Telemetry</dt>
+          <dd>
+            None. No analytics, no crash reporting, no usage pings. The only
+            outbound requests are the ones listed below, and you can verify that
+            with any network monitor.
+          </dd>
+        </div>
+      </dl>
+
+      <div style="margin-top: 56px">
         <h3 class="serif-fit" style="font-family: var(--serif); font-size: 22px; font-weight: 600; margin: 0 0 6px">
           Everything that leaves the machine
         </h3>
@@ -612,230 +703,11 @@
             <dd>During the private alpha, your email address when you sign in, to check you were invited.</dd>
           </div>
           <div class="never">
-            <dt>Nothing else. Ever.</dt>
-            <dd>No analytics, no telemetry, no crash reporting, no "anonymous usage data". Your transactions, balances, customers and receipts are never transmitted anywhere.</dd>
+            <dt>Nothing else, unless you switch it on</dt>
+            <dd>Your transactions, balances, customers and receipts go nowhere. If you later turn on cloud sync, that will be a thing you chose, said plainly, and revocable.</dd>
           </div>
         </dl>
       </div>
-    </div>
-  </section>
-
-  <section class="band" id="different">
-    <div class="shell">
-      <div class="band-head">
-        <div class="eyebrow">
-          <span class="num">04</span>
-          <span class="label">How this differs</span>
-        </div>
-        <h2 class="serif-fit">Four decisions most accounting software <em>made the other way.</em></h2>
-      </div>
-
-      <div class="versus">
-        <div>
-          <h3 class="serif-fit">It reads your bank's files, not a feed</h3>
-          <p class="versus-them">
-            Most tools pull transactions through an aggregator holding your
-            banking login. Those connections break — a bank changes its site, the
-            link drops, and your ledger quietly stops updating until you notice.
-          </p>
-          <p>
-            Eclipse reads the statement file your bank already offers you. There is
-            no live connection to break and no third party holding a credential
-            that reaches your money. When your bank changes its website, nothing
-            happens to you.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="serif-fit">Duplicates are matched, not guessed</h3>
-          <p class="versus-them">
-            Import an overlapping statement into most software and it compares
-            dates and amounts, then either creates a second copy of everything or
-            silently swallows a real transaction that looked similar.
-          </p>
-          <p>
-            An OFX file carries the bank's own id for every line. Re-import the
-            same range and the second pass adds nothing — not "probably nothing".
-            Where no id exists, a likely duplicate is flagged for you rather than
-            decided for you.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="serif-fit">Reconciled means reconciled</h3>
-          <p class="versus-them">
-            In most ledgers a reconciled figure can still be edited afterwards, and
-            last quarter's numbers change under you with nothing to show why.
-          </p>
-          <p>
-            Once a line is checked against a statement it locks. Its category and
-            notes stay editable — the figures do not, until you undo that
-            statement deliberately. A balancing entry, if you need one, is a real
-            transaction anyone can see rather than a hidden adjustment.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="serif-fit">It tells you what is coming, not what happened</h3>
-          <p class="versus-them">
-            Reports describe the past. The question that actually keeps an owner
-            awake is whether payroll clears on the 30th.
-          </p>
-          <p>
-            Scheduled bills, unpaid invoices and your ordinary daily spend are
-            projected forward to the day your balance is lowest. Invoices already
-            overdue are deliberately left out — money nobody has paid is not cash,
-            and a forecast that counts it is confidently wrong.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band" id="roadmap">
-    <div class="shell">
-      <div class="band-head">
-        <div class="eyebrow">
-          <span class="num">05</span>
-          <span class="label">Coming next</span>
-        </div>
-        <h2 class="serif-fit">Moving your books between machines, <em>without moving in.</em></h2>
-      </div>
-
-      <div class="soon">
-        <span class="soon-flag">Not built yet</span>
-        <h3 class="serif-fit">The cloud as a removal van, not a landlord</h3>
-
-        <p>
-          Every cloud accounting package works the same way: your books live on
-          their server, and the app on your desk is a window onto it. Stop paying
-          and the window closes.
-        </p>
-        <p>
-          The plan here inverts that. Your books stay on your machine. When you
-          want them on a second computer, you send an <strong>encrypted copy
-          up</strong>, pull it down on the other machine, and then
-          <strong>delete the copy from the cloud</strong> whenever you like. Both
-          computers keep their own full copy of everything. The cloud held it in
-          transit and holds nothing afterwards.
-        </p>
-
-        <div class="steps">
-          <div>
-            <span class="n">01</span>
-            <p>Encrypt and upload a copy from the machine that has your books.</p>
-          </div>
-          <div>
-            <span class="n">02</span>
-            <p>Download it on the second machine, which now holds its own full copy.</p>
-          </div>
-          <div>
-            <span class="n">03</span>
-            <p>Delete the cloud copy the moment you no longer need it — one button.</p>
-          </div>
-          <div>
-            <span class="n">04</span>
-            <p>Both machines keep working, online or off, with nothing left on a server.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid" style="margin-top: 56px">
-        <div class="cell">
-          <h3 class="serif-fit">A cloud account will be optional, and paid</h3>
-          <p>
-            Keeping data on somebody else's hardware costs money, so the account
-            that does it will cost money. What it will not do is become the price
-            of opening your own books — the app works without one, and will keep
-            working without one.
-          </p>
-        </div>
-        <div class="cell">
-          <h3 class="serif-fit">Encrypted before it leaves</h3>
-          <p>
-            The intent is that anything uploaded is encrypted on your machine
-            first, so what sits in storage is not readable without your key. The
-            exact design will be written down here before it ships, not
-            afterwards.
-          </p>
-        </div>
-        <div class="cell">
-          <h3 class="serif-fit">Deletion that means deletion</h3>
-          <p>
-            Removing a cloud copy will remove it, not hide it behind a flag. It is
-            worth saying plainly because "delete" means several different things
-            across this industry.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band" id="security">
-    <div class="shell">
-      <div class="band-head">
-        <div class="eyebrow">
-          <span class="num">06</span>
-          <span class="label">Security, specifically</span>
-        </div>
-        <h2 class="serif-fit">The details, so you can <em>judge them yourself.</em></h2>
-      </div>
-
-      <dl class="spec">
-        <div>
-          <dt>Your password</dt>
-          <dd>
-            Hashed with <code>scrypt</code> at N=2<sup>15</sup>, r=8 — deliberately
-            slow and memory-hard, so guessing at it costs real hardware. Compared
-            in constant time, so how long a wrong answer takes reveals nothing
-            about how close it was.
-          </dd>
-        </div>
-        <div>
-          <dt>Payment processor keys</dt>
-          <dd>
-            Encrypted by your operating system's own keychain — DPAPI on Windows,
-            Keychain on macOS, libsecret on Linux — and tied to your OS user
-            account. Where no keychain exists, they fall back to
-            <code>AES-256-GCM</code> under your passphrase. Plaintext keys are
-            held only long enough to sign one request and never reach the part of
-            the app that draws the screen.
-          </dd>
-        </div>
-        <div>
-          <dt>Your recovery code</dt>
-          <dd>
-            160 bits from the system random source, shown once, and stored only as
-            a hash. It is single use: recovering with it clears it, because a
-            recovery code left live is a second permanent key to your books.
-          </dd>
-        </div>
-        <div>
-          <dt>Backups</dt>
-          <dd>
-            Every file inside a backup carries a <code>SHA-256</code> checksum. A
-            damaged or truncated archive is refused rather than half-restored, and
-            a restore stages everything and verifies it before touching what you
-            have — then sets the old copy aside rather than deleting it.
-          </dd>
-        </div>
-        <div>
-          <dt>Your books, at rest</dt>
-          <dd>
-            A database file in your user folder, protected by your operating
-            system account like every other file you own. Not encrypted — see
-            below.
-          </dd>
-        </div>
-        <div>
-          <dt>Telemetry</dt>
-          <dd>
-            None. No analytics, no crash reporting, no usage pings. The only
-            outbound requests are the three listed above, and you can verify that
-            with any network monitor.
-          </dd>
-        </div>
-      </dl>
 
       <div class="limits">
         <h3 class="serif-fit">What this does not do</h3>
@@ -843,24 +715,22 @@
         <dl>
           <dt>The ledger file is not encrypted at rest</dt>
           <dd>
-            Anyone who can reach your unlocked computer can read it, the same as
-            any document on your disk. Full-disk encryption — BitLocker or
-            FileVault — is the right answer today, and at-rest encryption is on
-            the list.
+            Anyone who can reach your unlocked computer can read it, the same as any
+            document on your disk. Full-disk encryption — BitLocker or FileVault —
+            is the right answer today, and at-rest encryption is on the list.
           </dd>
           <dt>The builds are not code signed yet</dt>
           <dd>
-            Which is why Windows warns that the publisher is unrecognised and
-            macOS wants a right-click then Open. It also means you are trusting
-            the download itself; every build is published from a public,
-            reproducible CI run rather than from anybody's laptop.
+            Which is why Windows warns that the publisher is unrecognised and macOS
+            wants a right-click then Open. It also means you are trusting the
+            download itself; every build is published from a public CI run rather
+            than from anybody's laptop.
           </dd>
           <dt>The invitation gate is a gate, not a lock</dt>
           <dd>
-            It stops an installer being casually passed around during the alpha.
-            It runs on your computer, so somebody determined could remove it —
-            and gain nothing but the use of an app they were not invited to,
-            since no server holds anyone's books.
+            It stops an installer being casually passed around during the alpha. It
+            runs on your computer, so somebody determined could remove it — and gain
+            nothing but the use of an app they were not invited to.
           </dd>
         </dl>
       </div>
@@ -871,7 +741,7 @@
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">07</span>
+          <span class="num">06</span>
           <span class="label">Releases</span>
         </div>
         <h2 class="serif-fit">Built in the open, <em>shipped often.</em></h2>
@@ -886,7 +756,7 @@
     <div class="shell">
       <div class="band-head">
         <div class="eyebrow">
-          <span class="num">08</span>
+          <span class="num">07</span>
           <span class="label">Questions</span>
         </div>
         <h2 class="serif-fit">The things worth <em>asking first.</em></h2>
@@ -895,39 +765,43 @@
       <div class="faq">
         <div>
           <h3>What does it cost?</h3>
-          <p>Nothing during the alpha. Whatever the pricing turns out to be, the file holding your books stays readable on your own machine — being a customer and having access to your own accounts are not the same thing here.</p>
+          <p>Nothing during the alpha, and the aim is to stay genuinely cheap after it. Whatever the pricing turns out to be, the file holding your books stays readable on your own machine — being a customer and having access to your own accounts are not the same thing here.</p>
         </div>
         <div>
           <h3>Can I try it right now?</h3>
           <p>It is invite-only while it is an alpha. <a href="https://eclipsepublishingstudios.com/support">Ask for an invitation</a> and you will be added to the list.</p>
         </div>
         <div>
+          <h3>Does it really work offline?</h3>
+          <p>Yes — every screen. The only things needing a connection are syncing a payment processor and checking for updates, and neither blocks anything else.</p>
+        </div>
+        <div>
           <h3>Where exactly are my books kept?</h3>
-          <p>In a single database file in your user folder, alongside a folder of any receipts you attach. Settings shows you the exact path, and opens it.</p>
+          <p>In a single database file in your user folder, beside a folder of any receipts you attach. Settings shows you the exact path and opens it.</p>
         </div>
         <div>
           <h3>Is the file encrypted?</h3>
-          <p>No — it is protected by your computer's user account, like every other file on your disk. Payment-processor keys <em>are</em> encrypted, in your OS keychain. We would rather say this plainly than imply more.</p>
+          <p>Not yet — it is protected by your computer's user account, like every other file on your disk. Payment-processor keys <em>are</em> encrypted, in your OS keychain. We would rather say this plainly than imply more.</p>
         </div>
         <div>
-          <h3>What if I stop using it?</h3>
-          <p>Export the register to CSV, or take a backup — one file with your ledger and every receipt in it. The app keeps opening your books whether or not you are still a customer.</p>
+          <h3>Will there be a cloud version?</h3>
+          <p>An optional paid cloud account is planned, designed to move an encrypted copy of your books between your own machines and then let you delete that copy — not to become the place your books live. See <a href="#roadmap">Coming next</a>.</p>
         </div>
         <div>
-          <h3>Does it work offline?</h3>
-          <p>Yes. Everything except syncing a payment processor and checking for updates works with no connection at all.</p>
+          <h3>Can more than one person use it?</h3>
+          <p>Not yet. Teams are being built so an owner, a bookkeeper and an accountant can work in the same books with a record of who changed what.</p>
+        </div>
+        <div>
+          <h3>How much can I change?</h3>
+          <p>Categories, tax buckets, budget periods, recurring schedules and automatic rules are all yours to define, and templates give a sensible starting point for a shop, a freelancer or a household.</p>
         </div>
         <div>
           <h3>Which banks does it support?</h3>
-          <p>Any bank that lets you download a statement — .ofx, .qfx and .qbo import directly, and CSV works with a quick column check. There is no bank connection to break.</p>
-        </div>
-        <div>
-          <h3>Will there ever be a cloud version?</h3>
-          <p>A paid cloud account is planned, and it is optional. It is designed to move an encrypted copy of your books between your own machines and then let you delete that copy — not to become the place your books live. See <a href="#roadmap">Coming next</a>.</p>
+          <p>Any bank that lets you download a statement — .ofx, .qfx and .qbo import directly, and CSV works with a quick column check. There is no live bank connection to break.</p>
         </div>
         <div>
           <h3>Personal or business?</h3>
-          <p>Both, and they are kept separate. A business book gets invoices, customers and payment links; a personal one gets net worth instead and is not cluttered with the rest.</p>
+          <p>Both, kept separate. A business book gets invoices, customers and payment links; a personal one gets net worth instead and is not cluttered with the rest.</p>
         </div>
       </div>
     </div>
