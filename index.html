@@ -110,6 +110,25 @@
   .band-head h2 em { font-style: italic; color: var(--acid); }
   .band-sub { margin: 14px 0 0; max-width: 40em; color: var(--soft); font-size: 15.5px; }
 
+  /* ---- announcement ---- */
+
+  /* Sits above the headline because it is the news, and reads as a note
+     rather than a shout — the page argues quietly everywhere else and a
+     loud strip here would look like somebody else's marketing. */
+  .news {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    padding: 14px 18px; margin-bottom: 30px;
+    border: 1px solid rgba(163, 230, 53, 0.24);
+    border-radius: 8px;
+    background: rgba(163, 230, 53, 0.045);
+  }
+  .news-flag {
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--acid); white-space: nowrap;
+  }
+  .news p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--soft); flex: 1 1 22em; }
+  .news strong { color: var(--ink); font-weight: 600; }
+
   /* ---- hero ---- */
 
   .hero { padding-top: 84px; padding-bottom: 56px; }
@@ -334,6 +353,15 @@
 
 <main id="top">
   <section class="shell hero">
+    <div class="news">
+      <span class="news-flag">New</span>
+      <p>
+        <strong>The alpha is open to everyone.</strong> No invitation, no waiting list,
+        nothing to confirm — download it and start. It is free while it is an alpha, and
+        the only thing asked in return is that you say what broke.
+      </p>
+    </div>
+
     <div class="eyebrow">
       <span class="num">01</span>
       <span class="label">Download</span>
