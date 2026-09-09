@@ -887,6 +887,29 @@
   }
 
   /** Release notes are author-written text; insert them as text, never HTML. */
+  /**
+   * Release notes as prose, for a page that shows them as plain text.
+   *
+   * The notes are markdown because that is what GitHub renders them as.
+   * Here they land in a <p> via textContent, so the asterisks around a
+   * bold phrase would simply be visible — which reads as a formatting
+   * bug rather than emphasis.
+   *
+   * The footer every release carries — where to download, and the
+   * code-signing warning — is cut at its horizontal rule. It is on this
+   * page twice already, and repeating it under five releases in a row
+   * pushes the actual changes off the end of the truncation.
+   */
+  function readable(markdown) {
+    return (markdown || '')
+      .split(/^---\s*$/m)[0]
+      .replace(/\*\*(.+?)\*\*/gs, '$1')
+      .replace(/(^|\s)[*_](\S[^*_]*?)[*_](?=\s|[.,;:)]|$)/g, '$1$2')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+  }
+
   function renderReleases(releases) {
     const host = document.getElementById('release-list');
     host.textContent = '';
@@ -917,7 +940,7 @@
 
       box.append(head);
 
-      const body = (release.body || '').trim();
+      const body = readable(release.body);
       if (body) {
         const notes = document.createElement('p');
         notes.className = 'release-notes';
