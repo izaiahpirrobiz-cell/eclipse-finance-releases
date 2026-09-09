@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Service — Eclipse Finance</title>
+<meta name="description" content="The terms for using Eclipse Finance. Plain language, and short.">
+<link rel="icon" href="eclipse-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Fraunces:ital,opsz,wght@0,9..144,400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a; --raised: #101010; --rule: #232323;
+    --ink: #ffffff; --soft: #a8a8a8; --muted: #6f6f6f; --acid: #a3e635;
+    --warn: #ffc46b;
+    --serif: Fraunces, Georgia, "Times New Roman", serif;
+    --sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  a { color: var(--acid); }
+
+  header {
+    border-bottom: 1px solid var(--rule); padding: 18px 0;
+    position: sticky; top: 0; background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(8px); z-index: 5;
+  }
+  .shell { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+  .bar { display: flex; align-items: center; gap: 16px; }
+  .brand {
+    font-family: var(--serif); font-size: 17px; font-weight: 600;
+    color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .spacer { flex: 1; }
+  .bar a.back { font-size: 13.5px; text-decoration: none; }
+
+  main { padding: 56px 0 80px; }
+  h1 {
+    font-family: var(--serif); font-size: clamp(32px, 6vw, 44px);
+    font-weight: 600; letter-spacing: -0.02em; margin: 0 0 10px; line-height: 1.15;
+  }
+  .updated { color: var(--muted); font-size: 13.5px; margin: 0 0 40px; }
+  .lede { font-size: 18px; color: var(--soft); margin: 0 0 40px; }
+
+  h2 {
+    font-family: var(--serif); font-size: 23px; font-weight: 600;
+    letter-spacing: -0.015em; margin: 44px 0 12px; line-height: 1.25;
+  }
+  p { color: var(--soft); margin: 0 0 16px; }
+  strong { color: var(--ink); font-weight: 600; }
+  ul { color: var(--soft); padding-left: 22px; margin: 0 0 16px; }
+  li { margin-bottom: 9px; }
+
+  .panel {
+    border: 1px solid var(--rule); border-radius: 10px;
+    padding: 22px 26px; margin: 26px 0; background: var(--raised);
+  }
+  .panel h3 {
+    margin: 0 0 10px; font-size: 15px; font-weight: 600; color: var(--ink);
+    font-family: var(--sans);
+  }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel.warn { border-color: rgba(255,196,107,0.28); background: rgba(255,196,107,0.05); }
+  .panel.warn h3 { color: var(--warn); }
+
+  footer {
+    border-top: 1px solid var(--rule); padding: 26px 0 60px;
+    color: var(--muted); font-size: 13.5px;
+  }
+  footer .shell { display: flex; gap: 20px; flex-wrap: wrap; }
+  footer a { text-decoration: none; }
+
+  @media (max-width: 600px) { main { padding: 36px 0 60px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="shell bar">
+    <a class="brand" href="/">Eclipse Finance</a>
+    <span class="spacer"></span>
+    <a class="back" href="/">&larr; Back to the app</a>
+  </div>
+</header>
+
+<main>
+  <div class="shell">
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated 9 September 2026</p>
+
+    <p class="lede">
+      The rules for using Eclipse Finance. Short, because there is not much to say
+      about a program that runs on your own computer and keeps your files there.
+    </p>
+
+    <h2>1. What you are agreeing to</h2>
+    <p>
+      By downloading or using Eclipse Finance ("the app"), made by Eclipse Publishing
+      Studios ("we", "us"), you agree to these terms. If you do not agree with them,
+      do not use the app.
+    </p>
+
+    <h2>2. The app is in alpha</h2>
+    <div class="panel warn">
+      <h3>Please read this one properly</h3>
+      <p>
+        Eclipse Finance is early software under active development. It has bugs we
+        have not found yet. Features change and occasionally disappear. It has not
+        been audited, certified, or tested against the range of real-world
+        bookkeeping that a finished product should be.
+      </p>
+      <p>
+        <strong>Keep your own backups, and do not rely on it as the only record of
+        anything that matters.</strong> The app has a backup feature and exports
+        everything to CSV — use both.
+      </p>
+    </div>
+
+    <h2>3. Your data is yours</h2>
+    <p>
+      We claim no ownership of anything you put into the app. Your books, your
+      customers, your invoices and your receipts belong to you.
+    </p>
+    <p>
+      They are stored on your computer, and we have no copy of them. That means we
+      cannot recover them for you if the file is lost, damaged, or the password is
+      forgotten and the recovery code is gone with it. Backups are your
+      responsibility, and the app gives you the tools to take them.
+    </p>
+
+    <h2>4. What it costs</h2>
+    <p>
+      The app is free while it is in alpha. It may not stay free forever, and a paid
+      cloud account is planned as an optional extra.
+    </p>
+    <p>
+      If pricing arrives, we will say so clearly before it applies, and the file
+      holding your books will remain readable on your own machine either way. Being
+      a paying customer and being able to open your own accounts are not the same
+      thing here, and we do not intend to make them the same thing.
+    </p>
+
+    <h2>5. Accounts</h2>
+    <p>
+      Signing in is optional. If you do sign in, you are responsible for keeping
+      access to that account secure, and for the activity that happens under it.
+    </p>
+    <p>
+      We may suspend an account that is being used to attack the service, to break
+      the law, or to interfere with other people's use of it. Doing so does not
+      touch the books on your machine — those are yours and stay where they are.
+    </p>
+
+    <h2>6. What you agree not to do</h2>
+    <ul>
+      <li>Use the app to break the law.</li>
+      <li>Attack, overload or attempt to gain unauthorised access to any service the
+        app talks to.</li>
+      <li>Resell or redistribute the app as though it were your own product.</li>
+      <li>Remove or misrepresent the notices that say who made it.</li>
+    </ul>
+    <p>
+      You are welcome to inspect how the app works, to take it apart to satisfy
+      yourself about what it does, and to say publicly what you find.
+    </p>
+
+    <h2>7. It is not financial or tax advice</h2>
+    <p>
+      Eclipse Finance records and summarises numbers you enter. Its reports —
+      including the profit and loss, the tax summary and the balance sheet — are a
+      summary of what you recorded and nothing more. They are not tax advice, not
+      accounting advice, and not a filed return.
+    </p>
+    <p>
+      You remain responsible for the accuracy of your records and for meeting your
+      own tax and reporting obligations. Have a qualified accountant check anything
+      that matters.
+    </p>
+
+    <h2>8. No warranty</h2>
+    <p>
+      The app is provided <strong>"as is"</strong>, without warranty of any kind,
+      express or implied, including any implied warranty of merchantability, fitness
+      for a particular purpose, or non-infringement. We do not warrant that it will
+      be uninterrupted, error-free, or that it will meet your requirements.
+    </p>
+
+    <h2>9. Limitation of liability</h2>
+    <p>
+      To the fullest extent the law allows, Eclipse Publishing Studios is not liable
+      for any indirect, incidental, special or consequential damages, or for any loss
+      of data, profits, revenue or business, arising out of your use of the app —
+      even if we have been told such damages are possible.
+    </p>
+    <p>
+      Where liability cannot be excluded, it is limited to the greater of the amount
+      you paid us for the app in the twelve months before the claim, or ten US
+      dollars.
+    </p>
+    <p>
+      Some jurisdictions do not allow these exclusions, in which case they apply to
+      you only as far as the law permits, and nothing here limits liability for
+      fraud or for death or personal injury caused by negligence.
+    </p>
+
+    <h2>10. Third parties</h2>
+    <p>
+      If you connect a payment processor such as Stripe, Square or PayPal, your use
+      of that service is governed by that service's own terms, not these. The same
+      applies to signing in with Google.
+    </p>
+
+    <h2>11. Changes</h2>
+    <p>
+      We may update these terms. When we do, the date at the top changes. Continuing
+      to use the app after a change means you accept the updated terms; if you do
+      not, stop using it and take your data with you, which the export feature exists
+      to make straightforward.
+    </p>
+
+    <h2>12. Ending it</h2>
+    <p>
+      You can stop using the app at any time by uninstalling it. Your books remain on
+      your computer until you delete them yourself.
+    </p>
+
+    <h2>13. Governing law</h2>
+    <p>
+      These terms are governed by the laws of the United States and of the state in
+      which Eclipse Publishing Studios operates, without regard to conflict of law
+      rules.
+    </p>
+
+    <h2>14. Contact</h2>
+    <p>
+      Questions about these terms:
+      <a href="https://eclipsepublishingstudios.com/support">eclipsepublishingstudios.com/support</a>.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <div class="shell">
+    <a href="/">Eclipse Finance</a>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="https://eclipsepublishingstudios.com/support">Support</a>
+    <a href="https://eclipsepublishingstudios.com">Eclipse Publishing</a>
+  </div>
+</footer>
+
+</body>
+</html>
