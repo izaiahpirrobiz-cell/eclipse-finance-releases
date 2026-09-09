@@ -127,12 +127,28 @@
       app, and it never moves unless you move it.
     </p>
     <p>
-      The password you set is used to derive the key that opens that file. It is not
-      stored anywhere — only a verifier that can check a password is correct without
-      revealing it. <strong>This means nobody can reset it for you.</strong> The app
-      issues a recovery code when you create the account, and that code is the only
-      way back in if the password is lost.
+      Your password is never stored — only a verifier that can check whether a
+      password is correct without revealing it. <strong>This means nobody can reset
+      it for you.</strong> The app issues a recovery code when you create the
+      account, and that code is the only way back in if the password is lost.
     </p>
+    <p>
+      The password also derives the key that encrypts any payment-processor keys you
+      save, which are additionally held in your operating system's keychain.
+    </p>
+
+    <div class="panel">
+      <h3>What the password does not do</h3>
+      <p>
+        <strong>It does not encrypt the ledger file itself.</strong> The database
+        holding your books sits on your disk as an ordinary file, and anybody who can
+        reach your unlocked computer can read it, the same as any other document
+        there. Full-disk encryption — BitLocker on Windows, FileVault on a Mac — is
+        the right answer today. Encrypting the ledger at rest is on the list and is
+        not done, and we would rather say so here than let the word "password" imply
+        it.
+      </p>
+    </div>
     <p>
       Receipts and documents you attach are copied into the same profile directory
       and stay there.
